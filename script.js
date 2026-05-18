@@ -15,9 +15,14 @@
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  /* ─── LENIS smooth scroll ─── */
+  /* ─── LENIS smooth scroll — SOLO DESKTOP ─── */
+  // Su iOS Safari Lenis causa jank e rompe lo scroll naturale del browser.
+  // Su mobile usiamo lo scroll nativo (è già fluido su iOS).
+  const isMobile = window.matchMedia('(max-width: 900px)').matches || ('ontouchstart' in window);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   let lenis = null;
-  if (window.Lenis && !prefersReducedMotion) {
+  if (window.Lenis && !prefersReducedMotion && !isMobile && !isIOS) {
     lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -31,6 +36,11 @@
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add((time) => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
+    }
+  } else {
+    // su mobile: assicuriamoci che ScrollTrigger funzioni senza Lenis
+    if (window.ScrollTrigger) {
+      ScrollTrigger.normalizeScroll(true);
     }
   }
 
@@ -48,11 +58,11 @@
     }, { passive: true });
   }
 
-  /* ─── PRELOADER con counter (più veloce: ~1s totale) ─── */
+  /* ─── PRELOADER snappier: 700ms desktop, 500ms mobile ─── */
   const pl = $('#preloader');
   const plCount = $('#plCount');
   let plProgress = 0;
-  const plDuration = 900; // era 1800
+  const plDuration = isMobile ? 500 : 700;
   const plStart = performance.now();
   const plLoop = (t) => {
     plProgress = Math.min(100, Math.round(((t - plStart) / plDuration) * 100));
@@ -61,7 +71,6 @@
   };
   requestAnimationFrame(plLoop);
 
-  // se il documento è già caricato, parte subito
   const startPreloaderExit = () => {
     setTimeout(() => {
       if (pl) {
@@ -69,22 +78,22 @@
         setTimeout(() => {
           pl.classList.add('gone');
           startHeroIntro();
-        }, 550); // era 1100
+        }, 400);
       }
-    }, Math.max(0, plDuration - (performance.now() - plStart) + 80));
+    }, Math.max(0, plDuration - (performance.now() - plStart) + 50));
   };
   if (document.readyState === 'complete') {
     startPreloaderExit();
   } else {
     window.addEventListener('load', startPreloaderExit, { once: true });
   }
-  // fallback hard: dopo 2.5s comunque sblocchiamo
+  // fallback hard: dopo 1.8s comunque sblocchiamo
   setTimeout(() => {
     if (pl && !pl.classList.contains('gone')) {
       pl.classList.add('done');
-      setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 400);
+      setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 300);
     }
-  }, 2500);
+  }, 1800);
 
   /* ─── Anno footer ─── */
   const yearEl = $('#year');
@@ -836,6 +845,49 @@
       }
     }
   });
+
+  /* ════════════════════════════════════════════════════
+     MOBILE WOW: dot pagination + haptic feedback su Esperienze
+     ════════════════════════════════════════════════════ */
+  if (isMobile) {
+    const expTrack = $('.exp-h-track');
+    if (expTrack) {
+      const panels = $$('.exp-h-panel', expTrack);
+      // crea dot pagination
+      const dots = document.createElement('div');
+      dots.className = 'exp-dots';
+      panels.forEach((p, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'exp-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Pannello ${i+1}`);
+        dot.addEventListener('click', () => {
+          panels[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
+        dots.appendChild(dot);
+      });
+      const expSection = $('.esperienze-h');
+      expSection?.appendChild(dots);
+
+      // aggiorna active dot allo scroll
+      let scrollTimeout;
+      expTrack.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const center = expTrack.scrollLeft + expTrack.clientWidth / 2;
+          let closest = 0, minDist = Infinity;
+          panels.forEach((p, i) => {
+            const dist = Math.abs(p.offsetLeft + p.clientWidth / 2 - center);
+            if (dist < minDist) { minDist = dist; closest = i; }
+          });
+          dots.querySelectorAll('.exp-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === closest);
+          });
+          // haptic feedback su iOS (se disponibile)
+          if (window.navigator.vibrate) window.navigator.vibrate(5);
+        }, 80);
+      }, { passive: true });
+    }
+  }
 
   /* ════════════════════════════════════════════════════
      GOOGLE MAPS — click-to-activate overlay
