@@ -2163,3 +2163,93 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 @media (hover: none) {
   .magnetic { transform: none !important; }
 }
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE OVERRIDES — ULTIMO BLOCCO (vince per cascata)
+   Fix bug specificità: .magnetic e .choice-grid default
+   sovrascrivevano le regole mobile.
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 980px) {
+  /* nav-cta nascosta su mobile (override .magnetic { display: inline-flex }) */
+  .nav-cta { display: none !important; }
+}
+
+@media (max-width: 768px) {
+  /* CHOICE GRID: forza 2 colonne sempre */
+  .prenota-form .choice-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+  .prenota-form .choice span {
+    padding: 0.78rem 0.4rem !important;
+    font-size: 14px !important;
+    letter-spacing: 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  /* foglie ulivo: meno invasive su mobile (sembravano macchie) */
+  .leaf { opacity: 0.18 !important; }
+  .leaf-3, .leaf-5, .leaf-6 { display: none; }
+
+  /* sezione prenota più aerata */
+  .prenota { padding: 4rem 1.1rem !important; }
+  .prenota-form { padding: 1.4rem 1rem !important; }
+  .prenota-side h2 { font-size: clamp(2rem, 7vw, 2.6rem) !important; }
+  .prenota-side > p { font-size: 1rem !important; }
+  .prenota-promise li { font-size: 0.88rem !important; }
+
+  /* form spazi tra i campi più stretti */
+  .form-grid { gap: 1rem 0.7rem !important; }
+  .field label { font-size: 0.65rem !important; letter-spacing: 0.18em !important; }
+  .field input, .field textarea, .field select {
+    padding: 0.85rem 0.85rem !important;
+    font-size: 16px !important; /* iOS no-zoom */
+  }
+
+  /* contatti prenota */
+  .prenota-contact { padding: 0.85rem 0.95rem !important; gap: 0.8rem !important; }
+  .prenota-contact strong { font-size: 0.92rem !important; word-break: break-word; }
+  .prenota-contact em { font-size: 0.7rem !important; }
+
+  /* WhatsApp + chat fab non sovrappongono il form */
+  .wa-fab { width: 50px; height: 50px; right: 1rem; bottom: 5rem; }
+  .chat-fab { right: 1rem; bottom: 1rem; }
+}
+
+/* Esperienze: forza swipe orizzontale su tutti i mobile */
+@media (max-width: 900px) {
+  .esperienze-h { overflow: hidden !important; }
+  .exp-h-track {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    height: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 4rem 0 3rem !important;
+  }
+  .exp-h-panel {
+    width: 90vw !important;
+    min-width: 90vw !important;
+    max-width: 90vw !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: center !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  .exp-h-intro, .exp-h-outro {
+    width: 85vw !important;
+    min-width: 85vw !important;
+    max-width: 85vw !important;
+  }
+}
+
+/* iPhone SE / very narrow */
+@media (max-width: 380px) {
+  .prenota-form .choice span { padding: 0.65rem 0.3rem !important; font-size: 13px !important; }
+  .pc-ico { width: 36px !important; height: 36px !important; }
+  .prenota { padding: 3.5rem 0.9rem !important; }
+  .prenota-form { padding: 1.2rem 0.8rem !important; }
+}
