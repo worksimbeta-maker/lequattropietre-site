@@ -835,14 +835,129 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 }
 .exp-h-outro blockquote em { font-family: var(--serif); font-style: italic; color: var(--oro-bright); }
 
+/* mobile: scroll orizzontale NATIVO con scroll-snap (swipe touch) */
 @media (max-width: 900px) {
-  .esperienze-h { padding: 4rem 0; }
-  .exp-h-track { flex-direction: column; height: auto; transform: none !important; }
-  .exp-h-panel { width: 100%; min-height: auto; height: auto; padding: 4rem var(--gutter); }
-  .exp-h-card { grid-template-columns: 1fr; padding: 0; gap: 2rem; }
-  .exp-h-photo { height: 55vh; max-height: 460px; }
-  .exp-h-intro { padding: 6rem var(--gutter) 2rem; }
-  .exp-h-outro { padding: 5rem var(--gutter); }
+  .esperienze-h {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+  }
+  .exp-h-track {
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    transform: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    padding: 4rem 0 3rem;
+  }
+  .exp-h-track::-webkit-scrollbar { display: none; }
+  .exp-h-panel {
+    width: 90vw;
+    min-width: 90vw;
+    max-width: 90vw;
+    height: auto;
+    min-height: auto;
+    padding: 1.5rem;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+  .exp-h-intro {
+    padding: 3rem 1.5rem;
+    width: 85vw; min-width: 85vw; max-width: 85vw;
+  }
+  .exp-h-card {
+    grid-template-columns: 1fr;
+    padding: 0;
+    gap: 1.2rem;
+    align-content: start;
+  }
+  .exp-h-photo { height: 38vh; max-height: 320px; }
+  .exp-h-body { padding: 0; }
+  .exp-h-body h3 { font-size: clamp(1.6rem, 6vw, 2rem); margin-bottom: 0.7rem; }
+  .exp-h-body p { font-size: 1rem; line-height: 1.55; margin-bottom: 1.2rem; }
+  .exp-h-num { font-size: 0.8rem; margin-bottom: 0.6rem; }
+  .exp-h-stone { width: 24px; height: 24px; margin-bottom: 0.7rem; }
+  .exp-h-outro {
+    padding: 3rem 1.5rem;
+    width: 85vw; min-width: 85vw; max-width: 85vw;
+    gap: 1.5rem;
+  }
+  .exp-h-outro blockquote { font-size: clamp(2rem, 7vw, 2.6rem); }
+
+  /* hint visivo "swipe →" che pulsa */
+  .esperienze-h::after {
+    content: "swipe →";
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--terra);
+    letter-spacing: 0.15em;
+    opacity: 0.65;
+    pointer-events: none;
+    animation: swipeHint 2.5s ease-in-out infinite;
+    z-index: 5;
+  }
+  @keyframes swipeHint {
+    0%, 100% { transform: translateX(0); opacity: 0.65; }
+    50%      { transform: translateX(-6px); opacity: 1; }
+  }
+}
+
+/* ────────────────────────────────────────
+   iOS / MOBILE FORM FIX — no auto-zoom su input
+   ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* iOS Safari zoom-on-focus se font-size < 16px → forziamo 16px */
+  .field input,
+  .field textarea,
+  .field select,
+  .ora-pill span,
+  .choice span,
+  .chat-input input {
+    font-size: 16px;
+  }
+  .prenota-form { padding: 1.4rem 1.2rem; }
+  .choice-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .choice span { padding: 0.75rem 0.4rem; font-size: 14px; letter-spacing: 0; }
+  /* pill orari scroll touch */
+  .ora-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+  .ora-pills::-webkit-scrollbar { display: none; }
+  .ora-pill { flex-shrink: 0; }
+  .ora-pill span { padding: 0.6rem 1rem; }
+  .ora-pill.divider { display: none; }
+  /* contatti prenotazione */
+  .prenota-contact { padding: 0.95rem 1rem; }
+  .prenota-contact strong { font-size: 0.95rem; word-break: break-word; }
+  .prenota-contact em { font-size: 0.72rem; }
+  .prenota { padding: 5rem 1.2rem; }
+  .prenota-wrap { gap: 2.5rem; }
+  /* contatti map più alto su mobile */
+  .contatti-map { aspect-ratio: 1 / 1; max-height: 380px; }
+}
+
+/* iPhone SE / very small (< 380px) */
+@media (max-width: 380px) {
+  .choice span { padding: 0.65rem 0.3rem; font-size: 13px; }
+  .prenota-contact { gap: 0.6rem; padding: 0.85rem; }
+  .pc-ico { width: 36px; height: 36px; }
+  .pc-ico-wa, .pc-ico { flex-shrink: 0; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1604,8 +1719,48 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
   background: var(--panna);
   box-shadow: 0 6px 24px rgba(42, 34, 24, 0.08);
   position: relative;
+  overflow: hidden;
 }
-.contatti-map iframe { width: 100%; height: 100%; border: none; position: absolute; inset: 0; }
+.contatti-map iframe {
+  width: 100%; height: 100%;
+  border: none;
+  position: absolute; inset: 0;
+  pointer-events: none; /* default: scroll page-friendly */
+}
+.contatti-map.active iframe { pointer-events: auto; }
+
+/* overlay che intercetta scroll/touch, click per attivare la mappa */
+.map-overlay {
+  position: absolute; inset: 0;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 1.2rem;
+  transition: opacity 0.4s var(--ease);
+}
+.contatti-map.active .map-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+.map-overlay-hint {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0.7rem 1.2rem;
+  background: rgba(26, 20, 11, 0.85);
+  color: var(--panna);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(26, 20, 11, 0.2);
+  font-family: var(--sans);
+  font-weight: 400;
+  transition: transform 0.3s var(--ease), background 0.3s;
+}
+.map-overlay:hover .map-overlay-hint { transform: translateY(-2px); background: var(--terra); }
+.map-overlay-hint svg { color: var(--oro-bright); flex-shrink: 0; }
 
 @media (max-width: 880px) {
   .contatti-grid { grid-template-columns: 1fr; }

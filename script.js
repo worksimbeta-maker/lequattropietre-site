@@ -48,11 +48,11 @@
     }, { passive: true });
   }
 
-  /* ─── PRELOADER con counter ─── */
+  /* ─── PRELOADER con counter (più veloce: ~1s totale) ─── */
   const pl = $('#preloader');
   const plCount = $('#plCount');
   let plProgress = 0;
-  const plDuration = 1800;
+  const plDuration = 900; // era 1800
   const plStart = performance.now();
   const plLoop = (t) => {
     plProgress = Math.min(100, Math.round(((t - plStart) / plDuration) * 100));
@@ -61,17 +61,30 @@
   };
   requestAnimationFrame(plLoop);
 
-  window.addEventListener('load', () => {
+  // se il documento è già caricato, parte subito
+  const startPreloaderExit = () => {
     setTimeout(() => {
       if (pl) {
         pl.classList.add('done');
         setTimeout(() => {
           pl.classList.add('gone');
           startHeroIntro();
-        }, 1100);
+        }, 550); // era 1100
       }
-    }, Math.max(0, plDuration - (performance.now() - plStart) + 200));
-  });
+    }, Math.max(0, plDuration - (performance.now() - plStart) + 80));
+  };
+  if (document.readyState === 'complete') {
+    startPreloaderExit();
+  } else {
+    window.addEventListener('load', startPreloaderExit, { once: true });
+  }
+  // fallback hard: dopo 2.5s comunque sblocchiamo
+  setTimeout(() => {
+    if (pl && !pl.classList.contains('gone')) {
+      pl.classList.add('done');
+      setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 400);
+    }
+  }, 2500);
 
   /* ─── Anno footer ─── */
   const yearEl = $('#year');
@@ -190,8 +203,11 @@
     else splitLineChars(el);
   }
 
-  /* ─── HERO intro animation ─── */
+  /* ─── HERO intro animation (snappier) ─── */
+  let heroStarted = false;
   function startHeroIntro() {
+    if (heroStarted) return;
+    heroStarted = true;
     if (!window.gsap) return;
     const eyebrow = $('.hero-eyebrow');
     const titleLines = $$('.hero-title .line');
@@ -203,17 +219,17 @@
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.6 })
+    tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.4 })
       .from('.hero-title .char', {
         yPercent: 110,
-        rotate: 4,
-        duration: 0.95,
-        stagger: 0.018,
+        rotate: 3,
+        duration: 0.7,
+        stagger: 0.012,
         ease: 'power4.out'
-      }, '-=0.3')
-      .to(sub, { opacity: 1, y: 0, duration: 0.8 }, '-=0.55')
-      .to(ctas, { opacity: 1, y: 0, duration: 0.7 }, '-=0.55')
-      .to(trust, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4');
+      }, '-=0.25')
+      .to(sub, { opacity: 1, y: 0, duration: 0.55 }, '-=0.45')
+      .to(ctas, { opacity: 1, y: 0, duration: 0.5 }, '-=0.4')
+      .to(trust, { opacity: 1, y: 0, duration: 0.45 }, '-=0.35');
 
     startHeroSlideshow();
   }
@@ -820,5 +836,32 @@
       }
     }
   });
+
+  /* ════════════════════════════════════════════════════
+     GOOGLE MAPS — click-to-activate overlay
+     (evita scroll bloccato sopra l'iframe)
+     ════════════════════════════════════════════════════ */
+  const mapWrap = $('#contattiMap');
+  const mapOverlay = $('#mapOverlay');
+  if (mapWrap && mapOverlay) {
+    mapOverlay.addEventListener('click', (e) => {
+      e.preventDefault();
+      mapWrap.classList.add('active');
+      // focus all'iframe per accessibilità
+      const iframe = mapWrap.querySelector('iframe');
+      if (iframe) {
+        iframe.tabIndex = 0;
+        iframe.focus();
+      }
+    });
+    // se il mouse esce dalla mappa, disattiva
+    mapWrap.addEventListener('mouseleave', () => {
+      if (mapWrap.classList.contains('active')) {
+        mapWrap.classList.remove('active');
+        const iframe = mapWrap.querySelector('iframe');
+        if (iframe) iframe.tabIndex = -1;
+      }
+    });
+  }
 
 })();

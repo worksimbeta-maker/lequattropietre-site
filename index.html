@@ -817,8 +817,14 @@
         </a>
       </div>
 
-      <div class="contatti-map reveal-img">
-        <iframe src="https://www.google.com/maps?q=Castiglion+Fibocchi+Via+Provinciale+dei+Sette+Ponti+8&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Mappa Le Quattro Pietre"></iframe>
+      <div class="contatti-map reveal-img" id="contattiMap">
+        <iframe src="https://www.google.com/maps?q=Castiglion+Fibocchi+Via+Provinciale+dei+Sette+Ponti+8&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Mappa Le Quattro Pietre" tabindex="-1"></iframe>
+        <button class="map-overlay" id="mapOverlay" type="button" aria-label="Clicca per attivare la mappa interattiva">
+          <span class="map-overlay-hint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Clicca per attivare la mappa</span>
+          </span>
+        </button>
       </div>
     </div>
   </section>
