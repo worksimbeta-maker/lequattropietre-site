@@ -847,19 +847,21 @@
   });
 
   /* ════════════════════════════════════════════════════
-     MOBILE WOW: dot pagination + haptic feedback su Esperienze
+     MOBILE WOW: 3D carousel + dot pagination + haptic
+     (pattern: iOS Apple Music + MotionSites Liquid Glass)
      ════════════════════════════════════════════════════ */
   if (isMobile) {
     const expTrack = $('.exp-h-track');
     if (expTrack) {
       const panels = $$('.exp-h-panel', expTrack);
-      // crea dot pagination
+
+      // dot pagination
       const dots = document.createElement('div');
       dots.className = 'exp-dots';
       panels.forEach((p, i) => {
         const dot = document.createElement('span');
         dot.className = 'exp-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', `Pannello ${i+1}`);
+        dot.setAttribute('aria-label', `Pannello ${i+1} di ${panels.length}`);
         dot.addEventListener('click', () => {
           panels[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         });
@@ -868,25 +870,70 @@
       const expSection = $('.esperienze-h');
       expSection?.appendChild(dots);
 
-      // aggiorna active dot allo scroll
-      let scrollTimeout;
-      expTrack.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          const center = expTrack.scrollLeft + expTrack.clientWidth / 2;
-          let closest = 0, minDist = Infinity;
-          panels.forEach((p, i) => {
-            const dist = Math.abs(p.offsetLeft + p.clientWidth / 2 - center);
-            if (dist < minDist) { minDist = dist; closest = i; }
-          });
-          dots.querySelectorAll('.exp-dot').forEach((d, i) => {
-            d.classList.toggle('active', i === closest);
-          });
-          // haptic feedback su iOS (se disponibile)
-          if (window.navigator.vibrate) window.navigator.vibrate(5);
-        }, 80);
-      }, { passive: true });
+      // update 3D carousel state in real-time durante lo scroll
+      let lastClosest = -1;
+      let rafId = null;
+      const updateCarousel = () => {
+        const center = expTrack.scrollLeft + expTrack.clientWidth / 2;
+        let closest = 0, minDist = Infinity;
+        panels.forEach((p, i) => {
+          const dist = Math.abs(p.offsetLeft + p.offsetWidth / 2 - center);
+          if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        panels.forEach((p, i) => {
+          p.classList.remove('is-active', 'is-prev', 'is-next');
+          if (i === closest) p.classList.add('is-active');
+          else if (i === closest - 1) p.classList.add('is-prev');
+          else if (i === closest + 1) p.classList.add('is-next');
+        });
+        // dot active
+        const dotEls = dots.querySelectorAll('.exp-dot');
+        dotEls.forEach((d, i) => d.classList.toggle('active', i === closest));
+        // haptic on change
+        if (closest !== lastClosest) {
+          lastClosest = closest;
+          if (window.navigator.vibrate) window.navigator.vibrate(8);
+        }
+      };
+
+      const onExpScroll = () => {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          updateCarousel();
+          rafId = null;
+        });
+      };
+      expTrack.addEventListener('scroll', onExpScroll, { passive: true });
+
+      // inizializza state all'avvio
+      setTimeout(updateCarousel, 150);
+      // refresh dopo orientation change
+      window.addEventListener('resize', () => setTimeout(updateCarousel, 300));
     }
+  }
+
+  /* ════════════════════════════════════════════════════
+     MOBILE PARALLAX: hero foto si sposta lievemente
+     durante lo scroll (no Lenis, scroll nativo)
+     ════════════════════════════════════════════════════ */
+  if (isMobile && !prefersReducedMotion) {
+    const heroSlides = $$('.hero-slide img');
+    const handleScroll = () => {
+      const y = window.scrollY;
+      if (y > window.innerHeight * 1.5) return; // solo prima zona
+      const offset = y * 0.18;
+      heroSlides.forEach(img => {
+        img.style.transform = `translate3d(0, ${offset}px, 0) scale(1.08)`;
+      });
+    };
+    let scrollRaf = null;
+    window.addEventListener('scroll', () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        handleScroll();
+        scrollRaf = null;
+      });
+    }, { passive: true });
   }
 
   /* ════════════════════════════════════════════════════
