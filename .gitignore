@@ -1,0 +1,24 @@
+# Dipendenze
+node_modules/
+
+# Vercel
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Log
+*.log
+npm-debug.log*
+
+# Env (non committare mai chiavi)
+.env
+.env.local
+.env.*.local

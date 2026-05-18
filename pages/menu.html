@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Menu — Le Quattro Pietre</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --terra: #8B4513;
+    --terra-light: #C4713A;
+    --oliva: #4A5240;
+    --oliva-light: #6B7A5E;
+    --panna: #F5EFE0;
+    --panna-dark: #EDE4CF;
+    --carbone: #2A2218;
+    --oro: #B8922A;
+    --bianco: #FDFAF4;
+  }
+  html { font-size: 16px; background: var(--panna); }
+  body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    color: var(--carbone);
+    background: var(--bianco);
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .hero { position: relative; height: 320px; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(42,34,24,0.25) 0%, rgba(42,34,24,0.78) 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding: 2rem 1.5rem; text-align: center;
+  }
+  .logo-mark { width: 44px; height: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-bottom: 0.75rem; }
+  .logo-mark span { border-radius: 2px; }
+  .logo-mark span:nth-child(1) { background: #C4713A; }
+  .logo-mark span:nth-child(2) { background: #6B7A5E; }
+  .logo-mark span:nth-child(3) { background: #B8922A; }
+  .logo-mark span:nth-child(4) { background: #8B4513; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; letter-spacing: 0.12em; color: #FDFAF4; text-transform: uppercase; line-height: 1.1; }
+  .hero .tagline { font-size: 0.65rem; letter-spacing: 0.25em; color: #B8922A; text-transform: uppercase; margin-top: 0.4rem; }
+  .hero .location { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.85rem; color: rgba(253,250,244,0.6); margin-top: 0.2rem; }
+  .intro-strip { background: var(--carbone); padding: 1.1rem 1.5rem; text-align: center; }
+  .intro-strip p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,239,224,0.65); line-height: 1.6; }
+  .sep { height: 5px; background: var(--panna-dark); }
+  .sep-oro { display: flex; align-items: center; justify-content: center; padding: 1.1rem 0 0.4rem; color: var(--oro); font-size: 0.9rem; letter-spacing: 0.45em; }
+  .section { padding: 0 1.25rem 1.75rem; }
+  .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--panna-dark); }
+  .section-icon { width: 28px; height: 28px; background: var(--carbone); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 13px; height: 13px; fill: none; stroke: var(--oro); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; color: var(--terra); letter-spacing: 0.05em; }
+  .section-subtitle { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--oliva-light); margin-top: 1px; }
+  .photo-banner { width: calc(100% + 2.5rem); margin-left: -1.25rem; height: 180px; overflow: hidden; margin-bottom: 1rem; position: relative; }
+  .photo-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .photo-banner .caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(42,34,24,0.5); color: rgba(245,239,224,0.85); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.35rem 0.75rem; }
+  .dish { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.85rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); gap: 0.75rem; }
+  .dish:last-child { border-bottom: none; }
+  .dish-photo { display: flex; gap: 0.75rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); align-items: flex-start; }
+  .dish-photo:last-child { border-bottom: none; }
+  .dish-thumb { width: 82px; height: 72px; border-radius: 5px; overflow: hidden; flex-shrink: 0; }
+  .dish-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .dish-content { flex: 1; }
+  .dish-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+  .dish-info { flex: 1; }
+  .dish-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--carbone); line-height: 1.3; }
+  .dish-desc { font-size: 0.75rem; color: var(--oliva-light); margin-top: 0.2rem; line-height: 1.5; font-weight: 300; font-style: italic; }
+  .dish-tags { display: flex; gap: 0.3rem; margin-top: 0.35rem; flex-wrap: wrap; }
+  .tag { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 6px; border-radius: 2px; font-weight: 500; }
+  .tag-stagione { background: #EBF0E4; color: #3B5230; }
+  .tag-classico { background: #F0E8DC; color: #7A3810; }
+  .tag-casa { background: #F5EFD5; color: #7A6010; }
+  .dish-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--terra); white-space: nowrap; padding-top: 1px; }
+  .dish-featured { background: var(--panna); border-radius: 6px; padding: 0.9rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--terra); }
+  .dish-featured .dish-name { color: var(--terra); font-size: 1.1rem; }
+  .photo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: calc(100% + 2.5rem); margin-left: -1.25rem; margin-bottom: 1rem; height: 150px; }
+  .photo-pair img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .wine-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); gap: 0.5rem; }
+  .wine-row:last-child { border-bottom: none; }
+  .wine-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--carbone); }
+  .wine-meta { font-size: 0.7rem; color: var(--oliva-light); font-style: italic; }
+  .wine-prices { text-align: right; flex-shrink: 0; }
+  .wine-prices .price-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--oliva-light); display: block; }
+  .wine-prices .price-val { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 600; color: var(--terra); }
+  .note-box { margin: 0 1.25rem 1.5rem; background: var(--panna); border-radius: 4px; padding: 0.75rem 1rem; font-size: 0.7rem; color: var(--oliva-light); line-height: 1.6; border: 1px solid var(--panna-dark); }
+  .note-box strong { color: var(--oliva); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6rem; display: block; margin-bottom: 0.25rem; }
+  .footer { background: var(--carbone); padding: 2rem 1.5rem; text-align: center; }
+  .footer p { color: rgba(245,239,224,0.5); font-size: 0.75rem; line-height: 1.8; }
+  .footer .contact-link { color: var(--oro); font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; display: block; margin-top: 0.5rem; }
+  .footer .stagionalita { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: rgba(245,239,224,0.4); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?w=900&q=80" alt="Colline toscane">
+  <div class="hero-overlay">
+    <div class="logo-mark"><span></span><span></span><span></span><span></span></div>
+    <h1>Le Quattro<br>Pietre</h1>
+    <p class="tagline">Ristorante · Agriturismo · Toscana</p>
+    <p class="location">Castiglion Fibocchi, Arezzo</p>
+  </div>
+</div>
+
+<div class="intro-strip">
+  <p>Da oltre trent'anni tra le colline aretine.<br>Cucina del territorio, fatta come si faceva una volta.</p>
+</div>
+
+<div class="sep-oro">· · ·</div>
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 11h18M5 11V7a7 7 0 0 1 14 0v4M9 21h6M12 17v4"/></svg></div>
+    <div><div class="section-title">Antipasti</div><div class="section-subtitle">dal territorio</div></div>
+  </div>
+
+  <div class="photo-banner">
+    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=900&q=80" alt="Tagliere toscano">
+    <div class="caption">Tagliere della casa · prodotti locali</div>
+  </div>
+
+  <div class="dish dish-featured">
+    <div class="dish-info">
+      <div class="dish-name">Crostini della casa</div>
+      <div class="dish-desc">fegatini toscani, pomodoro fresco, lardo di Colonnata su pane casereccio abbrustolito</div>
+      <div class="dish-tags"><span class="tag tag-classico">classico</span><span class="tag tag-casa">fatto in casa</span></div>
+    </div>
+    <div class="dish-price">9€</div>
+  </div>
+
+  <div class="dish-photo">
+    <div class="dish-thumb"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&q=80" alt="Affettati misti"></div>
+    <div class="dish-content">
+      <div class="dish-row"><div class="dish-name">Affettati misti toscani</div><div class="dish-price">14€</div></div>
+      <div class="dish-desc">finocchiona, prosciutto crudo, capocollo, miele di castagno e noci</div>
+      <div class="dish-tags"><span class="tag tag-classico">classico</span></div>
+    </div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Pecorino dell'Aretino</div>
+      <div class="dish-desc">stagionatura mista con confettura di fichi del giardino e miele di acacia</div>
+      <div class="dish-tags"><span class="tag tag-stagione">stagionale</span></div>
+    </div>
+    <div class="dish-price">12€</div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Zuppetta di fagioli all'uccelletto</div>
+      <div class="dish-desc">con olio nuovo e crostino di pane sciapo della Valdarno</div>
+      <div class="dish-tags"><span class="tag tag-casa">fatto in casa</span><span class="tag tag-stagione">stagionale</span></div>
+    </div>
+    <div class="dish-price">10€</div>
+  </div>
+</div>
+
+<div class="sep"></div>
+<div class="sep-oro">· · ·</div>
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></div>
+    <div><div class="section-title">Primi Piatti</div><div class="section-subtitle">pasta fatta a mano · zuppe · risotti</div></div>
+  </div>
+
+  <div class="dish-photo">
+    <div class="dish-thumb"><img src="https://images.unsplash.com/photo-1551183053-bf91798d9ef7?w=300&q=80" alt="Pappardelle al ragù"></div>
+    <div class="dish-content">
+      <div class="dish-row"><div class="dish-name">Pappardelle al cinghiale</div><div class="dish-price">16€</div></div>
+      <div class="dish-desc">pasta all'uovo tirata a mano, ragù di cinghiale della Valdambra, pecorino stagionato</div>
+      <div class="dish-tags"><span class="tag tag-casa">fatto in casa</span><span class="tag tag-classico">classico</span></div>
+    </div>
+  </div>
+
+  <div class="photo-pair">
+    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80" alt="Ribollita toscana">
+    <img src="https://images.unsplash.com/photo-1560717845-968823efbee1?w=400&q=80" alt="Risotto">
+  </div>
+
+  <div class="dish dish-featured">
+    <div class="dish-info">
+      <div class="dish-name">Ribollita della tradizione</div>
+      <div class="dish-desc">pane toscano raffermo, cavolo nero, fagioli cannellini, verdure dell'orto</div>
+      <div class="dish-tags"><span class="tag tag-classico">classico</span><span class="tag tag-casa">fatto in casa</span></div>
+    </div>
+    <div class="dish-price">12€</div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Tagliolini al tartufo</div>
+      <div class="dish-desc">pasta fresca, burro di malga, tartufo estivo delle colline aretine, parmigiano 36 mesi</div>
+      <div class="dish-tags"><span class="tag tag-stagione">stagionale</span></div>
+    </div>
+    <div class="dish-price">22€</div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Risotto al Chianti e salsiccia</div>
+      <div class="dish-desc">riso Carnaroli, salsiccia nostrana, riduzione di Chianti Colli Aretini, rosmarino</div>
+      <div class="dish-tags"><span class="tag tag-casa">fatto in casa</span></div>
+    </div>
+    <div class="dish-price">15€</div>
+  </div>
+</div>
+
+<div class="sep"></div>
+<div class="sep-oro">· · ·</div>
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
+    <div><div class="section-title">Secondi Piatti</div><div class="section-subtitle">dalla brace · dalla tradizione</div></div>
+  </div>
+
+  <div class="photo-banner">
+    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80" alt="Carne alla brace">
+    <div class="caption">Brace di legna · carni del territorio</div>
+  </div>
+
+  <div class="dish dish-featured">
+    <div class="dish-info">
+      <div class="dish-name">Scottiglia di carne mista</div>
+      <div class="dish-desc">piatto emblema della casa — cinghiale, manzo, maiale in umido con vino rosso e salvia, servita sul pane</div>
+      <div class="dish-tags"><span class="tag tag-classico">classico</span><span class="tag tag-casa">ricetta storica</span></div>
+    </div>
+    <div class="dish-price">19€</div>
+  </div>
+
+  <div class="dish-photo">
+    <div class="dish-thumb"><img src="https://images.unsplash.com/photo-1558030137-a56c1b002c64?w=300&q=80" alt="Bistecca Chianina"></div>
+    <div class="dish-content">
+      <div class="dish-row"><div class="dish-name">Bistecca alla brace Chianina</div><div class="dish-price">7€/etto</div></div>
+      <div class="dish-desc">carne IGP della Valdichiana, cotta sulla brace di legna · al sangue</div>
+      <div class="dish-tags"><span class="tag tag-classico">classico</span></div>
+    </div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Coniglio alla cacciatora</div>
+      <div class="dish-desc">coniglio nostrano, olive taggiasche, capperi, vino bianco e aglio in camicia</div>
+      <div class="dish-tags"><span class="tag tag-stagione">stagionale</span><span class="tag tag-casa">fatto in casa</span></div>
+    </div>
+    <div class="dish-price">17€</div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Arista di maiale al forno</div>
+      <div class="dish-desc">lombo di maiale aromatizzato con rosmarino e aglio, cotto lento in forno a legna</div>
+      <div class="dish-tags"><span class="tag tag-casa">fatto in casa</span></div>
+    </div>
+    <div class="dish-price">16€</div>
+  </div>
+</div>
+
+<div class="sep"></div>
+<div class="sep-oro">· · ·</div>
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 3-5 7-5 7S7 10 7 7a5 5 0 0 1 5-5z"/><path d="M12 14v8M8 22h8"/></svg></div>
+    <div><div class="section-title">Dolci</div><div class="section-subtitle">preparati ogni giorno in cucina</div></div>
+  </div>
+
+  <div class="dish-photo">
+    <div class="dish-thumb"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=80" alt="Cantucci con vin santo"></div>
+    <div class="dish-content">
+      <div class="dish-row"><div class="dish-name">Cantucci con Vin Santo</div><div class="dish-price">8€</div></div>
+      <div class="dish-desc">biscotti di mandorle fatti in casa, Vin Santo del Chianti Classico DOC</div>
+      <div class="dish-tags"><span class="tag tag-classico">classico</span></div>
+    </div>
+  </div>
+
+  <div class="dish-photo">
+    <div class="dish-thumb"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80" alt="Panna cotta"></div>
+    <div class="dish-content">
+      <div class="dish-row"><div class="dish-name">Panna cotta al miele di castagno</div><div class="dish-price">7€</div></div>
+      <div class="dish-desc">con salsa di frutti di bosco freschi e granella di nocciole</div>
+      <div class="dish-tags"><span class="tag tag-stagione">stagionale</span></div>
+    </div>
+  </div>
+
+  <div class="dish">
+    <div class="dish-info">
+      <div class="dish-name">Torta della nonna</div>
+      <div class="dish-desc">pasta frolla ripiena di crema pasticcera, pinoli e zucchero a velo</div>
+      <div class="dish-tags"><span class="tag tag-casa">fatto in casa</span><span class="tag tag-classico">classico</span></div>
+    </div>
+    <div class="dish-price">6€</div>
+  </div>
+</div>
+
+<div class="sep"></div>
+<div class="sep-oro">· · ·</div>
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon"><svg viewBox="0 0 24 24"><path d="M5 3h14v6a7 7 0 1 1-14 0V3zm7 13v5m-4 0h8"/></svg></div>
+    <div><div class="section-title">Vini della Casa</div><div class="section-subtitle">selezione toscana · cantina propria</div></div>
+  </div>
+
+  <div class="photo-banner">
+    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=900&q=80" alt="Cantina con botti">
+    <div class="caption">Cantina propria · Colli Aretini</div>
+  </div>
+
+  <div class="wine-row">
+    <div><div class="wine-name">Chianti Colli Aretini DOC</div><div class="wine-meta">Rosso · Sangiovese · Valdarno</div></div>
+    <div class="wine-prices"><span class="price-label">calice · bottiglia</span><span class="price-val">4€ · 18€</span></div>
+  </div>
+  <div class="wine-row">
+    <div><div class="wine-name">Vernaccia di San Gimignano</div><div class="wine-meta">Bianco · Vernaccia · DOCG</div></div>
+    <div class="wine-prices"><span class="price-label">calice · bottiglia</span><span class="price-val">5€ · 22€</span></div>
+  </div>
+  <div class="wine-row">
+    <div><div class="wine-name">Rosato della Fattoria</div><div class="wine-meta">Rosato · Sangiovese · produzione propria</div></div>
+    <div class="wine-prices"><span class="price-label">calice · bottiglia</span><span class="price-val">4€ · 16€</span></div>
+  </div>
+  <div class="wine-row">
+    <div><div class="wine-name">Vin Santo del Chianti</div><div class="wine-meta">Passito · Trebbiano, Malvasia · DOC</div></div>
+    <div class="wine-prices"><span class="price-label">bicchierino</span><span class="price-val">5€</span></div>
+  </div>
+</div>
+
+<div class="note-box">
+  <strong>Note allergeni &amp; menu</strong>
+  Il menu cambia con le stagioni e segue la disponibilità delle materie prime. Informate il nostro personale di eventuali allergie o intolleranze. I piatti contrassegnati "fatto in casa" possono contenere glutine, uova, latte. Chiediamo la vostra pazienza: la cucina lenta richiede il suo tempo.
+</div>
+
+<div class="footer">
+  <p>Ristorante · Agriturismo · Location eventi</p>
+  <span class="contact-link">Via S. Agata 41 · Castiglion Fibocchi (AR)<br>0575 47588 · www.lequattropietre.it</span>
+  <p class="stagionalita">«Un luogo dove il tempo rallenta.»<br>Le Quattro Pietre — da oltre trent'anni tra queste colline</p>
+</div>
+
+</body>
+</html>

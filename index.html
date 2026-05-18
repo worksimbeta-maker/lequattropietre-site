@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1A140B">
+
+  <title>Le Quattro Pietre · La Toscana che la Toscana ha dimenticato di essere · Castiglion Fibocchi, Arezzo</title>
+  <meta name="description" content="Pasta tirata a mano dalle 6 del mattino. Brace di legna di quercia. Cantina di famiglia. Sette camere d'epoca. Trent'anni nello stesso posto. Prenota il tuo tavolo, soggiorno o evento.">
+  <meta name="keywords" content="ristorante toscana arezzo, agriturismo castiglion fibocchi, matrimoni toscana villa, cucina toscana autentica, scottiglia, chianina alla brace, le quattro pietre">
+  <link rel="canonical" href="https://www.lequattropietre.it/">
+
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Le Quattro Pietre — La Toscana vera, da 30 anni">
+  <meta property="og:description" content="Ristorante, agriturismo e location matrimoni nelle colline di Arezzo. Cucina toscana lenta, sette camere d'epoca, eventi su misura.">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:url" content="https://www.lequattropietre.it/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Le Quattro Pietre",
+    "image": "https://www.lequattropietre.it/og.jpg",
+    "address": {"@type":"PostalAddress","streetAddress":"Via Provinciale dei Sette Ponti, 8","addressLocality":"Castiglion Fibocchi","addressRegion":"AR","postalCode":"52029","addressCountry":"IT"},
+    "telephone": "+39 0575 47588",
+    "servesCuisine": "Toscana",
+    "priceRange": "€€",
+    "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"127"}
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Italiana&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       GRAIN NOISE + FLOATING LEAVES
+       ═══════════════════════════════════════ -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="leaves" aria-hidden="true">
+    <span class="leaf leaf-1"></span>
+    <span class="leaf leaf-2"></span>
+    <span class="leaf leaf-3"></span>
+    <span class="leaf leaf-4"></span>
+    <span class="leaf leaf-5"></span>
+    <span class="leaf leaf-6"></span>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PRELOADER
+       ═══════════════════════════════════════ -->
+  <div id="preloader" class="preloader">
+    <div class="pl-stage">
+      <div class="pl-stones">
+        <div class="pl-stone pl-stone-1"></div>
+        <div class="pl-stone pl-stone-2"></div>
+        <div class="pl-stone pl-stone-3"></div>
+        <div class="pl-stone pl-stone-4"></div>
+      </div>
+      <div class="pl-text">
+        <span class="pl-word">Le&nbsp;Quattro&nbsp;Pietre</span>
+        <span class="pl-sub">Castiglion&nbsp;Fibocchi · Dal&nbsp;1995</span>
+      </div>
+      <div class="pl-counter"><span id="plCount">0</span><span class="pl-pct">%</span></div>
+    </div>
+    <div class="pl-curtain"></div>
+  </div>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+       ═══════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav-brand magnetic" aria-label="Le Quattro Pietre — home">
+      <div class="brand-mark">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Le Quattro Pietre</span>
+        <span class="brand-sub">Dal 1995 · Arezzo</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Navigazione principale">
+      <a href="#esperienze" data-nav-link>Esperienze</a>
+      <a href="#ristorante" data-nav-link>Ristorante</a>
+      <a href="#camere" data-nav-link>Camere</a>
+      <a href="#eventi" data-nav-link>Matrimoni</a>
+      <a href="#storia" data-nav-link>Storia</a>
+      <a href="#contatti" data-nav-link>Contatti</a>
+    </nav>
+
+    <a href="#prenota" class="nav-cta magnetic">
+      <span>Prenota</span>
+      <em class="dot"></em>
+    </a>
+
+    <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <a href="#esperienze">Esperienze</a>
+    <a href="#ristorante">Ristorante</a>
+    <a href="#camere">Camere</a>
+    <a href="#eventi">Matrimoni</a>
+    <a href="#storia">Storia</a>
+    <a href="#contatti">Contatti</a>
+    <a href="#prenota" class="drawer-cta">Prenota la tua esperienza</a>
+  </div>
+
+  <main>
+
+  <!-- ═══════════════════════════════════════
+       HERO — copy persuasivo (BIG IDEA + Meccanismo Unico)
+       ═══════════════════════════════════════ -->
+  <section id="hero" class="hero">
+    <div class="hero-slides">
+      <div class="hero-slide active">
+        <img src="assets/photos/villa-facciata.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1601758174039-bc12d96f7be1?w=1920&q=85'"
+             alt="Facciata della villa Le Quattro Pietre" loading="eager">
+      </div>
+      <div class="hero-slide">
+        <img src="assets/photos/villa-retro.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1499678329028-101435549a4e?w=1920&q=85'"
+             alt="Retro della villa con vasi terracotta" loading="lazy">
+      </div>
+      <div class="hero-slide">
+        <img src="assets/photos/piscina-notte.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1551734423-5a98ed79ca8d?w=1920&q=85'"
+             alt="Piscina sotto il gazebo di notte" loading="lazy">
+      </div>
+      <div class="hero-veil"></div>
+      <div class="hero-vignette"></div>
+    </div>
+
+    <div class="hero-mark">
+      <div class="hero-stone-logo">
+        <div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-fade>
+        <span class="line-left"></span>
+        Castiglion Fibocchi · Arezzo · Dal 1995
+        <span class="line-right"></span>
+      </p>
+
+      <h1 class="hero-title" data-split>
+        <span class="line">La&nbsp;Toscana</span>
+        <span class="line">che&nbsp;la&nbsp;Toscana</span>
+        <span class="line italic">ha&nbsp;dimenticato</span>
+        <span class="line italic">di&nbsp;essere.</span>
+      </h1>
+
+      <p class="hero-sub" data-fade>
+        Pasta tirata a mano dalle <strong>6 del mattino</strong>. Brace di legna di <strong>quercia</strong>.<br>
+        Cantina di famiglia. <strong>Sette camere d'epoca</strong>. Trent'anni nello stesso casale,<br>
+        ad accogliere chi cerca quello che non si trova più.
+      </p>
+
+      <div class="hero-ctas" data-fade>
+        <a href="#prenota" class="btn btn-primary magnetic">
+          <span class="btn-label">Prenota un tavolo</span>
+          <span class="btn-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+        <a href="#esperienze" class="btn btn-ghost magnetic">
+          <span class="btn-label">Scopri la villa</span>
+        </a>
+      </div>
+
+      <p class="hero-trust" data-fade>
+        <span class="hero-trust-stars">★★★★★</span>
+        <span class="hero-trust-text"><strong>4,8/5</strong> su 127 recensioni · <strong>Risposta in 24h</strong> · <strong>Confermiamo noi</strong></span>
+      </p>
+    </div>
+
+    <div class="hero-slide-meta" aria-hidden="true">
+      <span id="slideIndex">01</span>
+      <span class="slide-bar"><span id="slideBar"></span></span>
+      <span>03</span>
+    </div>
+
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <span>scroll</span>
+      <div class="line-vert"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       MARQUEE DOUBLE
+       ═══════════════════════════════════════ -->
+  <section class="marquee-stack" aria-hidden="true">
+    <div class="marquee-line">
+      <div class="marquee-track">
+        <span>Le Quattro Pietre</span><em>·</em><span>Dal 1995</span><em>·</em><span>Cucina della tradizione</span><em>·</em><span>Brace di quercia</span><em>·</em><span>Sette camere d'epoca</span><em>·</em><span>200 matrimoni celebrati</span><em>·</em><span>Le Quattro Pietre</span><em>·</em><span>Dal 1995</span><em>·</em><span>Cucina della tradizione</span><em>·</em><span>Brace di quercia</span><em>·</em><span>Sette camere d'epoca</span><em>·</em><span>200 matrimoni celebrati</span><em>·</em>
+      </div>
+    </div>
+    <div class="marquee-line reverse">
+      <div class="marquee-track">
+        <span class="italic">terra</span><em>◆</em><span class="italic">fuoco</span><em>◆</em><span class="italic">grano</span><em>◆</em><span class="italic">pietra</span><em>◆</em><span class="italic">terra</span><em>◆</em><span class="italic">fuoco</span><em>◆</em><span class="italic">grano</span><em>◆</em><span class="italic">pietra</span><em>◆</em><span class="italic">terra</span><em>◆</em><span class="italic">fuoco</span><em>◆</em><span class="italic">grano</span><em>◆</em><span class="italic">pietra</span><em>◆</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       INTRO — BAB framework (Before/After/Bridge)
+       ═══════════════════════════════════════ -->
+  <section class="intro" data-gradient-section>
+    <div class="intro-wrap">
+      <p class="kicker" data-fade>— La nostra filosofia —</p>
+      <h2 class="intro-title" data-split>
+        Quattro pietre.<br>
+        <em>Una Toscana.</em>
+      </h2>
+      <p class="intro-body" data-fade>
+        Trovare la Toscana vera, oggi, è difficile. Tra le trattorie turistiche
+        e gli agriturismi-resort, i posti dove si mangia ancora <em>come si mangiava</em>
+        sono pochi.
+      </p>
+      <p class="intro-body" data-fade>
+        Le Quattro Pietre è uno di quelli. <strong>Da trent'anni nello stesso casale</strong>
+        di Castiglion Fibocchi, la stessa famiglia, la stessa cucina, le stesse colline.
+        Quattro elementi — <strong>terra, fuoco, grano, pietra</strong> — racchiudono
+        ciò che facciamo e ciò che siamo.
+      </p>
+
+      <div class="counter-strip">
+        <div class="counter-item" data-fade>
+          <span class="counter-num" data-count="30">0</span><span class="counter-plus">+</span>
+          <span class="counter-lbl">anni nello stesso casale</span>
+        </div>
+        <div class="counter-item" data-fade>
+          <span class="counter-num" data-count="200">0</span><span class="counter-plus">+</span>
+          <span class="counter-lbl">matrimoni celebrati</span>
+        </div>
+        <div class="counter-item" data-fade>
+          <span class="counter-num" data-count="7">0</span>
+          <span class="counter-lbl">camere d'epoca</span>
+        </div>
+        <div class="counter-item" data-fade>
+          <span class="counter-num" data-count="0">0</span><span class="counter-plus">km</span>
+          <span class="counter-lbl">filiera locale</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ESPERIENZE — HORIZONTAL PINNED SCROLL
+       (4 PIETRE = 4 MECCANISMI UNICI)
+       ═══════════════════════════════════════ -->
+  <section id="esperienze" class="esperienze-h">
+    <div class="exp-h-track">
+      <div class="exp-h-panel exp-h-intro">
+        <p class="kicker">— Le quattro pietre —</p>
+        <h2 class="exp-h-title">
+          Ogni pietra,<br>
+          <em>una promessa.</em>
+        </h2>
+        <p class="exp-h-sub">scorri ↓</p>
+      </div>
+
+      <article class="exp-h-panel exp-h-card" data-tone="terra">
+        <div class="exp-h-photo">
+          <img src="assets/photos/villa-facciata.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&q=85'"
+               alt="Ristorante e brace" loading="lazy">
+        </div>
+        <div class="exp-h-body">
+          <span class="exp-h-num">01 · Fuoco</span>
+          <div class="exp-h-stone exp-h-stone-terra"></div>
+          <h3>Brace di quercia.<br>Pasta tirata all'alba.</h3>
+          <p>La pasta la facciamo noi, dalle 6 del mattino. La carne è Chianina IGP cotta sulla brace di legna di quercia. Il vino viene dai Colli Aretini. La <strong>scottiglia di carne mista</strong>, il nostro piatto da 30 anni, cuoce sei ore — come allora.</p>
+          <a href="#ristorante" class="exp-h-link">A tavola <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="exp-h-panel exp-h-card" data-tone="oliva">
+        <div class="exp-h-photo">
+          <img src="assets/photos/villa-retro.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1400&q=85'"
+               alt="Esterno con vasi terracotta" loading="lazy">
+        </div>
+        <div class="exp-h-body">
+          <span class="exp-h-num">02 · Grano</span>
+          <div class="exp-h-stone exp-h-stone-oliva"></div>
+          <h3>Sette camere.<br>Sette nomi.<br>Una sola anima.</h3>
+          <p>Mobili d'epoca <em>veri</em>, non vintage da catalogo. Travi a vista di cinque secoli. Finestre che si aprono sulle vigne. Colazione contadina: pane nostro, marmellate di stagione, uova del podere.</p>
+          <a href="#camere" class="exp-h-link">Le camere <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="exp-h-panel exp-h-card" data-tone="oro">
+        <div class="exp-h-photo">
+          <img src="assets/photos/matrimonio-tavolo-sposi.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1400&q=85'"
+               alt="Tavolo sposi allestito con fiori" loading="lazy">
+        </div>
+        <div class="exp-h-body">
+          <span class="exp-h-num">03 · Oro</span>
+          <div class="exp-h-stone exp-h-stone-oro"></div>
+          <h3>200 matrimoni<br>in 30 anni.</h3>
+          <p>Non abbiamo mai sbagliato un menu, mai mancato un orario, mai deluso una sposa. Salone interno per le sere, ampio giardino per i bianchi, terrazza per i brindisi. <strong>Un solo matrimonio per weekend.</strong> Sempre.</p>
+          <a href="#eventi" class="exp-h-link">Organizza il tuo <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="exp-h-panel exp-h-card" data-tone="pietra">
+        <div class="exp-h-photo">
+          <img src="assets/photos/piscina-notte.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1551734423-5a98ed79ca8d?w=1400&q=85'"
+               alt="Piscina sotto gazebo di notte" loading="lazy">
+        </div>
+        <div class="exp-h-body">
+          <span class="exp-h-num">04 · Pietra</span>
+          <div class="exp-h-stone exp-h-stone-pietra"></div>
+          <h3>Il tempo, qui,<br>è un'altra cosa.</h3>
+          <p>Ulivi che hanno visto due guerre. Piscina sotto gli alberi. Vasi di terracotta scolpiti a mano. Un posto per non fare niente, e <em>farlo bene</em>. Inclusa nel soggiorno, libera per gli ospiti del ristorante d'estate.</p>
+          <a href="#contatti" class="exp-h-link">Scopri il giardino <span>→</span></a>
+        </div>
+      </article>
+
+      <div class="exp-h-panel exp-h-outro">
+        <blockquote>
+          <em>«Quattro pietre.<br>Una Toscana.»</em>
+        </blockquote>
+        <a href="#prenota" class="btn btn-primary magnetic">
+          <span class="btn-label">Vieni a viverla</span>
+          <span class="btn-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       RISTORANTE — Meccanismo Unico + Pain/Solve
+       ═══════════════════════════════════════ -->
+  <section id="ristorante" class="ristorante">
+    <div class="rist-split">
+      <div class="rist-images">
+        <div class="rist-img-main reveal-img">
+          <img src="assets/photos/salone-eventi.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1551183053-bf91798d9ef7?w=1200&q=85'"
+               alt="Salone del ristorante apparecchiato" loading="lazy">
+        </div>
+        <div class="rist-img-sec reveal-img">
+          <img src="assets/photos/piscina-notte.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1600891964092-4316c288032e?w=900&q=85'"
+               alt="Esterno notturno" loading="lazy">
+        </div>
+        <div class="rist-img-third reveal-img">
+          <img src="assets/photos/villa-retro.jpg"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=900&q=85'"
+               alt="Architettura della villa" loading="lazy">
+        </div>
+      </div>
+
+      <div class="rist-content">
+        <p class="kicker" data-fade>— Il ristorante —</p>
+        <h2 data-split>La nostra cucina<br><em>ha un'età.</em><br>Trent'anni.</h2>
+        <p class="rist-lead" data-fade>
+          Non è marketing. È che il sugo della scottiglia cuoce nella stessa pentola
+          <strong>dal '95</strong>. Le pappardelle le tira a mano nostra mamma, alle 6 del mattino.
+          Il pane si fa due volte al giorno. Il vino arriva dalle nostre vigne sui Colli Aretini.
+        </p>
+        <p class="rist-quote" data-fade>
+          <em>"Da noi non si mangia veloce. Da noi si mangia bene."</em>
+        </p>
+        <ul class="rist-feats" data-fade>
+          <li><span class="feat-num">30+</span><span class="feat-lbl">anni di stessa cucina</span></li>
+          <li><span class="feat-num">100%</span><span class="feat-lbl">fatto in casa, ogni giorno</span></li>
+          <li><span class="feat-num">0 km</span><span class="feat-lbl">filiera Colli Aretini</span></li>
+        </ul>
+        <div class="rist-actions" data-fade>
+          <a href="pages/menu.html" class="btn btn-primary magnetic" target="_blank">
+            <span class="btn-label">Sfoglia il menu</span>
+            <span class="btn-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#prenota" class="btn btn-outline magnetic">
+            <span class="btn-label">Prenota un tavolo</span>
+          </a>
+        </div>
+
+        <div class="rist-hours" data-fade>
+          <strong>Orari · Mer–Dom</strong>
+          <span>Pranzo · 12:30 — 14:30</span>
+          <span>Cena · 19:30 — 22:00</span>
+          <span class="closed">Lunedì e Martedì chiusi (su prenotazione per eventi)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CAMERE — Meccanismo Unico (7 stanze, 7 nomi)
+       ═══════════════════════════════════════ -->
+  <section id="camere" class="camere">
+    <div class="section-head">
+      <p class="kicker" data-fade>— L'agriturismo —</p>
+      <h2 class="section-title" data-split>Sette stanze<br><em>fuori dal tempo.</em></h2>
+      <p class="section-sub" data-fade>
+        Dormirai in una camera che ha una storia, non un design.<br>
+        Mobili d'epoca veri, lino, vista sulle colline. Sveglia con il canto del gallo.
+      </p>
+    </div>
+
+    <div class="cam-gallery">
+      <a class="cam-tile cam-tile-lg reveal-img lightbox-link" data-tone="terra" href="assets/photos/villa-facciata.jpg" onerror="this.href='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600&q=90'">
+        <img src="assets/photos/villa-facciata.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200&q=85'"
+             alt="Camera Terra" loading="lazy">
+        <div class="cam-caption">
+          <span class="cam-num">01</span>
+          <div><strong>Terra</strong><em>matrimoniale · vista colline</em></div>
+        </div>
+      </a>
+      <a class="cam-tile reveal-img lightbox-link" data-tone="oliva" href="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1600&q=90">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=85" alt="Camera Oliva" loading="lazy">
+        <div class="cam-caption"><span class="cam-num">02</span><div><strong>Oliva</strong><em>doppia · giardino</em></div></div>
+      </a>
+      <a class="cam-tile reveal-img lightbox-link" data-tone="oro" href="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=90">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85" alt="Camera Oro" loading="lazy">
+        <div class="cam-caption"><span class="cam-num">03</span><div><strong>Oro</strong><em>singola · letto in ferro</em></div></div>
+      </a>
+      <a class="cam-tile cam-tile-lg reveal-img lightbox-link" data-tone="pietra" href="assets/photos/villa-retro.jpg">
+        <img src="assets/photos/villa-retro.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=85'"
+             alt="Camera Pietra" loading="lazy">
+        <div class="cam-caption"><span class="cam-num">04</span><div><strong>Pietra</strong><em>suite · camino · 30m²</em></div></div>
+      </a>
+      <a class="cam-tile reveal-img lightbox-link" data-tone="terra" href="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=90">
+        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=85" alt="Camera Grano" loading="lazy">
+        <div class="cam-caption"><span class="cam-num">05</span><div><strong>Grano</strong><em>tripla · familiare</em></div></div>
+      </a>
+      <a class="cam-tile reveal-img lightbox-link" data-tone="oliva" href="https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1600&q=90">
+        <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?w=900&q=85" alt="Camera Salvia" loading="lazy">
+        <div class="cam-caption"><span class="cam-num">06</span><div><strong>Salvia</strong><em>doppia · balcone</em></div></div>
+      </a>
+      <a class="cam-tile cam-tile-wide reveal-img lightbox-link" data-tone="oro" href="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1600&q=90">
+        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="Camera Fuoco" loading="lazy">
+        <div class="cam-caption"><span class="cam-num">07</span><div><strong>Fuoco</strong><em>matrimoniale · vista piscina · favorita degli sposi</em></div></div>
+      </a>
+    </div>
+
+    <div class="camere-cta">
+      <p data-fade><em>"Tre notti in camera Pietra, colazioni infinite, passeggiate fra gli ulivi. Torneremo, è una promessa."</em><br><strong>— Anne & Pieter, Olanda</strong></p>
+      <a href="#prenota" class="btn btn-primary magnetic" data-fade>
+        <span class="btn-label">Verifica disponibilità</span>
+        <span class="btn-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       EVENTI — Big Idea matrimoni con OFFERTA
+       ═══════════════════════════════════════ -->
+  <section id="eventi" class="eventi">
+    <div class="eventi-bg">
+      <img src="assets/photos/matrimonio-tavolo-sposi.jpg"
+           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1920&q=85'"
+           alt="Tavolo sposi allestito per matrimonio">
+      <div class="eventi-veil"></div>
+    </div>
+    <div class="eventi-content">
+      <p class="kicker" data-fade>— Matrimoni & Cerimonie —</p>
+      <h2 data-split>Il giorno<br>che ricorderai<br><em>per sempre.</em></h2>
+      <p class="eventi-lead" data-fade>
+        Quel matrimonio che dura tre giorni e poi tutti se ne ricordano.
+        <br><br>
+        <strong>Trent'anni di matrimoni</strong>, comunioni, cresime, eventi aziendali.
+        Salone interno per le sere, ampio giardino per i bianchi, terrazza per i brindisi.
+        Tutto in un'unica villa, con la cucina che già conosci.
+      </p>
+
+      <div class="eventi-includes" data-fade>
+        <h3>Tutto compreso, niente sorprese:</h3>
+        <ul class="eventi-list">
+          <li>✓ Cucina interna · pasta fatta a mano, brace, dolce della sposa</li>
+          <li>✓ Salone climatizzato · 80 coperti seduti</li>
+          <li>✓ Giardino con piscina · per aperitivo e foto</li>
+          <li>✓ Cantina propria di Colli Aretini</li>
+          <li>✓ Wedding planner inclusa nei nostri 30 anni di esperienza</li>
+          <li>✓ <strong>Un solo evento per weekend</strong>. La villa è tutta tua.</li>
+        </ul>
+      </div>
+
+      <div class="eventi-cta-row" data-fade>
+        <a href="#prenota" class="btn btn-primary btn-light magnetic">
+          <span class="btn-label">Richiedi sopralluogo gratuito</span>
+          <span class="btn-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="https://wa.me/393338144853?text=Ciao%21%20Vorrei%20info%20su%20un%20matrimonio%20alle%20Quattro%20Pietre" class="btn btn-ghost magnetic" target="_blank" rel="noopener">
+          <span class="btn-label">Scrivici su WhatsApp</span>
+        </a>
+      </div>
+
+      <p class="eventi-urgency" data-fade>
+        <strong>Date 2026 in chiusura.</strong> Tipicamente i sabati di maggio, giugno e settembre si esauriscono entro febbraio.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       STORIA — Brand storytelling
+       ═══════════════════════════════════════ -->
+  <section id="storia" class="storia">
+    <div class="storia-wrap">
+      <div class="storia-text">
+        <p class="kicker" data-fade>— La nostra storia —</p>
+        <h2 data-split>Dal 1995,<br><em>la stessa famiglia.</em><br>Le stesse colline.</h2>
+        <p data-fade>
+          Le Quattro Pietre nasce nel 1995 da una famiglia che ha scelto la lentezza.
+          Quando tutti aprivano ristoranti veloci e turistici, noi abbiamo deciso
+          di fare il contrario: una cucina che richiede tempo, una villa che ha tempo,
+          una famiglia che dà tempo agli ospiti.
+        </p>
+        <p data-fade>
+          Le quattro pietre sono i quattro elementi della nostra terra:
+          <em>terra, fuoco, grano, pietra</em>. Tutto ciò che serve per vivere bene,
+          da queste parti. Tutto ciò che noi sappiamo fare meglio.
+        </p>
+        <blockquote data-fade>
+          «Un luogo dove il tempo rallenta.»
+          <cite>— quello che ci dicono i nostri ospiti, da trent'anni</cite>
+        </blockquote>
+      </div>
+      <div class="storia-image reveal-img">
+        <img src="assets/photos/villa-facciata.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1464278533981-50106e6176b1?w=1200&q=85'"
+             alt="La villa Le Quattro Pietre" loading="lazy">
+        <div class="storia-badge">
+          <span class="badge-num" data-count="30">0</span>
+          <span class="badge-lbl">anni nello stesso<br>casale, nel verde</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CINEMATIC BREAK — quote + foto full-bleed
+       (pattern: Acreage Farming · MotionSites)
+       ═══════════════════════════════════════ -->
+  <section class="cinema-break" aria-hidden="true">
+    <div class="cinema-bg">
+      <img src="assets/photos/piscina-notte.jpg"
+           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1499678329028-101435549a4e?w=1920&q=85'"
+           alt="">
+      <div class="cinema-veil"></div>
+    </div>
+    <div class="cinema-content">
+      <p class="cinema-eyebrow">— La filosofia delle quattro pietre —</p>
+      <blockquote class="cinema-quote">
+        <em>«Da trent'anni accendiamo<br>lo stesso fuoco.<br>Per le stesse persone.»</em>
+      </blockquote>
+      <p class="cinema-attribution">Pierluigi · Le Quattro Pietre</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       TESTIMONIANZE — prova sociale (Elementi di Prova)
+       ═══════════════════════════════════════ -->
+  <section class="testimonianze">
+    <div class="section-head">
+      <p class="kicker" data-fade>— Dicono di noi —</p>
+      <h2 class="section-title" data-split>Le voci di chi è stato qui</h2>
+      <p class="section-sub" data-fade>
+        <strong>4,8/5</strong> su 127 recensioni · TripAdvisor · Google Maps · Booking
+      </p>
+    </div>
+    <div class="test-grid">
+      <blockquote class="test-card" data-fade>
+        <div class="test-stars">★★★★★</div>
+        <p>«La scottiglia è una delle cose più buone che abbiamo mai mangiato. E il posto sembra fermo a settant'anni fa, nel senso più bello del termine. Torneremo a settembre.»</p>
+        <footer><strong>Lorenzo & Chiara</strong><em>Firenze · cena del sabato</em></footer>
+      </blockquote>
+      <blockquote class="test-card" data-fade>
+        <div class="test-stars">★★★★★</div>
+        <p>«Ci siamo sposati qui. Tutto perfetto: la cucina, il giardino, la gentilezza. È stata la giornata della nostra vita. Pierluigi e la sua famiglia hanno fatto miracoli.»</p>
+        <footer><strong>Marta & Giulio</strong><em>Arezzo · matrimonio 90 invitati</em></footer>
+      </blockquote>
+      <blockquote class="test-card" data-fade>
+        <div class="test-stars">★★★★★</div>
+        <p>«Tre notti in camera Pietra, colazioni infinite, passeggiate fra gli ulivi. La piscina sotto le stelle, il vino della casa. Un posto che ti cambia il modo di pensare alle vacanze.»</p>
+        <footer><strong>Anne & Pieter</strong><em>Olanda · 3 notti agriturismo</em></footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PRENOTA — OFFERTA IRRESISTIBILE
+       (USP + Garanzia + CTA + Trust)
+       ═══════════════════════════════════════ -->
+  <section id="prenota" class="prenota">
+    <div class="prenota-wrap">
+      <div class="prenota-side">
+        <p class="kicker" data-fade>— Prenota —</p>
+        <h2 data-split>La tua tavola,<br><em>il tuo soggiorno,</em><br>il tuo evento.</h2>
+        <p data-fade>
+          <strong>Risposta entro 24 ore.</strong> Riceviamo personalmente ogni richiesta,
+          non un call center. Per emergenze, WhatsApp diretto al titolare.
+        </p>
+
+        <ul class="prenota-promise" data-fade>
+          <li>✓ <strong>Conferma in giornata</strong> via email o WhatsApp</li>
+          <li>✓ <strong>Nessun acconto</strong> per ristorante (solo eventi su preventivo)</li>
+          <li>✓ <strong>Cancellazione gratuita</strong> fino a 24h prima</li>
+          <li>✓ <strong>Privacy garantita</strong> — i tuoi dati non vanno a terzi</li>
+        </ul>
+
+        <div class="prenota-contacts">
+          <a href="tel:+390575475788" class="prenota-contact magnetic" data-fade>
+            <span class="pc-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+            </span>
+            <span><strong>0575 47588</strong><em>chiama il ristorante · Mer–Dom</em></span>
+          </a>
+          <a href="https://wa.me/393338144853?text=Ciao%21%20Vorrei%20informazioni%20su%20Le%20Quattro%20Pietre" class="prenota-contact magnetic" target="_blank" rel="noopener" data-fade>
+            <span class="pc-ico pc-ico-wa">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.4c1.4.8 3 1.3 4.8 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+            </span>
+            <span><strong>333 8144853</strong><em>WhatsApp del titolare</em></span>
+          </a>
+          <a href="mailto:lequattropietre@gmail.com" class="prenota-contact magnetic" data-fade>
+            <span class="pc-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+            </span>
+            <span><strong>lequattropietre@gmail.com</strong><em>per preventivi articolati</em></span>
+          </a>
+        </div>
+      </div>
+
+      <form class="prenota-form" id="prenotaForm" novalidate>
+        <div class="form-grid">
+          <div class="field full">
+            <label>Cosa vuoi prenotare?</label>
+            <div class="choice-grid">
+              <label class="choice"><input type="radio" name="tipo" value="ristorante" checked><span>Ristorante</span></label>
+              <label class="choice"><input type="radio" name="tipo" value="camere"><span>Camere</span></label>
+              <label class="choice"><input type="radio" name="tipo" value="evento"><span>Matrimonio / Evento</span></label>
+              <label class="choice"><input type="radio" name="tipo" value="info"><span>Solo info</span></label>
+            </div>
+          </div>
+
+          <!-- Sempre visibili -->
+          <div class="field"><label for="nome">Nome e cognome <span class="req">*</span></label><input type="text" id="nome" name="nome" placeholder="Mario Rossi" required autocomplete="name"></div>
+          <div class="field"><label for="email">Email <span class="req">*</span></label><input type="email" id="email" name="email" placeholder="mario@email.it" required autocomplete="email"></div>
+          <div class="field"><label for="tel">Telefono / WhatsApp</label><input type="tel" id="tel" name="tel" placeholder="+39 333 1234567" autocomplete="tel"></div>
+
+          <!-- ▼ Campi RISTORANTE -->
+          <div class="field" data-show-when="ristorante">
+            <label for="ospiti-rist">Quanti siete? <span class="req">*</span></label>
+            <input type="number" id="ospiti-rist" name="ospiti" min="1" max="40" placeholder="2">
+          </div>
+          <div class="field" data-show-when="ristorante">
+            <label for="data-rist">Data della prenotazione <span class="req">*</span></label>
+            <input type="date" id="data-rist" name="data">
+          </div>
+          <div class="field full" data-show-when="ristorante">
+            <label for="ora">Orario <span class="req">*</span></label>
+            <div class="ora-pills">
+              <label class="ora-pill"><input type="radio" name="ora" value="12:30"><span>12:30</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="13:00"><span>13:00</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="13:30"><span>13:30</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="14:00"><span>14:00</span></label>
+              <label class="ora-pill divider"><span>—</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="19:30"><span>19:30</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="20:00"><span>20:00</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="20:30"><span>20:30</span></label>
+              <label class="ora-pill"><input type="radio" name="ora" value="21:00"><span>21:00</span></label>
+            </div>
+          </div>
+
+          <!-- ▼ Campi CAMERE -->
+          <div class="field" data-show-when="camere">
+            <label for="checkin">Check-in <span class="req">*</span></label>
+            <input type="date" id="checkin" name="checkin">
+          </div>
+          <div class="field" data-show-when="camere">
+            <label for="checkout">Check-out <span class="req">*</span></label>
+            <input type="date" id="checkout" name="checkout">
+          </div>
+          <div class="field" data-show-when="camere">
+            <label for="ospiti-cam">Numero ospiti</label>
+            <input type="number" id="ospiti-cam" name="ospiti_camere" min="1" max="14" placeholder="2 adulti">
+          </div>
+          <div class="field" data-show-when="camere">
+            <label for="camera-pref">Camera preferita</label>
+            <select id="camera-pref" name="camera_preferita">
+              <option value="">— Nessuna preferenza —</option>
+              <option value="terra">01 · Terra (matrimoniale)</option>
+              <option value="oliva">02 · Oliva (doppia)</option>
+              <option value="oro">03 · Oro (singola)</option>
+              <option value="pietra">04 · Pietra (suite)</option>
+              <option value="grano">05 · Grano (tripla)</option>
+              <option value="salvia">06 · Salvia (doppia)</option>
+              <option value="fuoco">07 · Fuoco (matrimoniale)</option>
+            </select>
+          </div>
+
+          <!-- ▼ Campi EVENTO -->
+          <div class="field" data-show-when="evento">
+            <label for="tipo-evento">Tipo di evento <span class="req">*</span></label>
+            <select id="tipo-evento" name="tipo_evento">
+              <option value="">— Scegli —</option>
+              <option value="matrimonio">Matrimonio</option>
+              <option value="comunione">Comunione</option>
+              <option value="cresima">Cresima</option>
+              <option value="battesimo">Battesimo</option>
+              <option value="anniversario">Anniversario</option>
+              <option value="compleanno">Compleanno importante</option>
+              <option value="aziendale">Evento aziendale</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+          <div class="field" data-show-when="evento">
+            <label for="data-evento">Data desiderata (anche orientativa)</label>
+            <input type="date" id="data-evento" name="data_evento">
+          </div>
+          <div class="field" data-show-when="evento">
+            <label for="invitati">Numero invitati</label>
+            <input type="number" id="invitati" name="invitati" min="2" max="200" placeholder="80">
+          </div>
+          <div class="field" data-show-when="evento">
+            <label for="momento">Momento della giornata</label>
+            <select id="momento" name="momento">
+              <option value="">— Indifferente —</option>
+              <option value="pranzo">Pranzo</option>
+              <option value="cena">Cena</option>
+              <option value="aperitivo">Aperitivo cocktail</option>
+              <option value="full-day">Tutto il giorno</option>
+            </select>
+          </div>
+
+          <!-- ▼ Campi INFO -->
+          <div class="field full" data-show-when="info">
+            <label for="argomento">Su cosa vuoi informazioni?</label>
+            <select id="argomento" name="argomento">
+              <option value="">— Scegli —</option>
+              <option value="menu">Menu del ristorante</option>
+              <option value="camere">Camere e tariffe</option>
+              <option value="eventi">Pacchetti eventi</option>
+              <option value="orari">Orari e giorni di apertura</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+
+          <!-- Note + privacy + submit (sempre visibili) -->
+          <div class="field full">
+            <label for="note" id="note-label">Note (allergie, occasione, richieste speciali)</label>
+            <textarea id="note" name="note" rows="3" placeholder="Es. anniversario, allergia al glutine, tavolo all'esterno, sposa che adora le ortensie..."></textarea>
+          </div>
+          <div class="field full check">
+            <label><input type="checkbox" required> Ho letto e accetto la <a href="pages/privacy.html" target="_blank" class="link-under">Privacy Policy</a> — i miei dati restano qui</label>
+          </div>
+          <div class="field full">
+            <button type="submit" class="btn btn-primary btn-block magnetic">
+              <span class="btn-label" id="submit-label">Invia richiesta · risposta entro 24h</span>
+              <span class="btn-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-success" id="formSuccess" hidden>
+          <strong>Grazie. Richiesta ricevuta.</strong>
+          Ti rispondiamo personalmente entro 24 ore al recapito indicato.
+          Per qualsiasi urgenza, scrivici su WhatsApp al <a href="https://wa.me/393338144853">333 8144853</a>.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CONTATTI
+       ═══════════════════════════════════════ -->
+  <section id="contatti" class="contatti">
+    <div class="contatti-grid">
+      <div class="contatti-info">
+        <p class="kicker" data-fade>— Dove siamo —</p>
+        <h2 data-split>Castiglion Fibocchi<br><em>cuore della Toscana.</em></h2>
+        <p data-fade>
+          A <strong>15 minuti da Arezzo</strong>, 45 da Firenze, 1 ora da Siena.
+          Immersi tra ulivi e vigneti dei Colli Aretini. Parcheggio gratuito,
+          accesso facile in auto. Aeroporto di Firenze a 1h15.
+        </p>
+
+        <div class="contatti-card" data-fade>
+          <div class="cc-row"><span class="cc-lbl">Indirizzo</span><span class="cc-val">Via Provinciale dei Sette Ponti, 8<br>52029 Castiglion Fibocchi (AR)</span></div>
+          <div class="cc-row"><span class="cc-lbl">Telefono</span><span class="cc-val"><a href="tel:+390575475788">0575 47588</a> · <a href="tel:+393338144853">333 8144853</a></span></div>
+          <div class="cc-row"><span class="cc-lbl">Email</span><span class="cc-val"><a href="mailto:lequattropietre@gmail.com">lequattropietre@gmail.com</a></span></div>
+          <div class="cc-row"><span class="cc-lbl">Orari</span><span class="cc-val">Mer–Dom · 12:30—14:30 · 19:30—22:00<br><em class="muted">Lunedì e Martedì chiusi (solo eventi)</em></span></div>
+          <div class="cc-row"><span class="cc-lbl">Social</span><span class="cc-val"><a href="https://www.instagram.com/le4pietre/" target="_blank" rel="noopener">@le4pietre</a> · <a href="https://www.facebook.com/le4pietre/" target="_blank" rel="noopener">Facebook</a></span></div>
+        </div>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Le+Quattro+Pietre+Castiglion+Fibocchi" target="_blank" rel="noopener" class="btn btn-outline magnetic" data-fade>
+          <span class="btn-label">Indicazioni stradali</span>
+          <span class="btn-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+      </div>
+
+      <div class="contatti-map reveal-img">
+        <iframe src="https://www.google.com/maps?q=Castiglion+Fibocchi+Via+Provinciale+dei+Sette+Ponti+8&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Mappa Le Quattro Pietre"></iframe>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grand">
+      <h2 class="footer-grand-text" data-split>Le&nbsp;Quattro&nbsp;<em>Pietre</em></h2>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-mark big"><span></span><span></span><span></span><span></span></div>
+        <p>Da oltre trent'anni tra le colline aretine. Un luogo dove il tempo rallenta.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Esperienze</strong>
+        <a href="#ristorante">Ristorante</a>
+        <a href="#camere">Camere</a>
+        <a href="#eventi">Matrimoni</a>
+        <a href="pages/menu.html" target="_blank">Menu</a>
+      </div>
+      <div class="footer-col">
+        <strong>Contatti</strong>
+        <a href="tel:+390575475788">0575 47588</a>
+        <a href="https://wa.me/393338144853" target="_blank" rel="noopener">WhatsApp 333 8144853</a>
+        <a href="mailto:lequattropietre@gmail.com">lequattropietre@gmail.com</a>
+        <a href="https://maps.google.com/?q=Castiglion+Fibocchi" target="_blank" rel="noopener">Via dei Sette Ponti, 8</a>
+      </div>
+      <div class="footer-col">
+        <strong>Social</strong>
+        <a href="https://www.instagram.com/le4pietre/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/le4pietre/" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Le Quattro Pietre · P.IVA 01255590513</span>
+      <span>Castiglion Fibocchi · Arezzo · Toscana</span>
+      <span><a href="#">Privacy</a> · <a href="#">Cookie</a></span>
+    </div>
+  </footer>
+
+  <a class="wa-fab magnetic" href="https://wa.me/393338144853?text=Ciao%21%20Vorrei%20informazioni%20su%20Le%20Quattro%20Pietre" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.4c1.4.8 3 1.3 4.8 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+  </a>
+
+  <button class="chat-fab magnetic" id="chatFab" aria-label="Apri assistente Le Quattro Pietre">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="chat-fab-pulse"></span>
+  </button>
+
+  <aside class="chat-panel" id="chatPanel" aria-hidden="true">
+    <header class="chat-head">
+      <div class="chat-avatar"><span></span><span></span><span></span><span></span></div>
+      <div><strong>Pietra</strong><em>assistente Le Quattro Pietre</em></div>
+      <button class="chat-close" id="chatClose" aria-label="Chiudi chat">×</button>
+    </header>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg chat-bot">Ciao! Sono <strong>Pietra</strong>, l'assistente del ristorante e agriturismo. Posso aiutarti con prenotazioni, menu, camere, matrimoni, o darti indicazioni. Cosa ti serve?</div>
+      <div class="chat-quick">
+        <button data-q="Vorrei prenotare un tavolo">Prenota tavolo</button>
+        <button data-q="Disponibilità camere">Camere libere</button>
+        <button data-q="Matrimoni 2026">Matrimoni</button>
+        <button data-q="Orari">Orari</button>
+      </div>
+    </div>
+    <form class="chat-input" id="chatForm">
+      <input type="text" id="chatText" placeholder="Scrivi un messaggio..." autocomplete="off">
+      <button type="submit" aria-label="Invia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+    </form>
+    <div class="chat-foot">In attesa di integrazione con Dify · risposte di prova</div>
+  </aside>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Chiudi">×</button>
+    <button class="lb-prev" aria-label="Precedente">‹</button>
+    <button class="lb-next" aria-label="Successivo">›</button>
+    <img id="lbImage" src="" alt="">
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
