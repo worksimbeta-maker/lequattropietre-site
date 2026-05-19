@@ -950,18 +950,25 @@
       expTrack.addEventListener('mousedown', pauseAuto);
       expTrack.addEventListener('mouseup', resumeAuto);
 
-      // Avvia auto-rotate dopo intersezione viewport (non gira sprecato fuori)
+      // AUTO-ROTATE: parte garantito dopo 3 secondi dal page load.
+      // L'IntersectionObserver controlla SOLO pausa/resume per non sprecare CPU.
+      setTimeout(() => {
+        if (!userInteracted) startAuto();
+      }, 3000);
+
       if ('IntersectionObserver' in window) {
         const expIO = new IntersectionObserver((entries) => {
           entries.forEach(en => {
-            if (en.isIntersecting && !userInteracted) startAuto();
-            else clearInterval(autoTimer);
+            if (en.isIntersecting) {
+              // visibile → riprendi (se non in pausa per touch)
+              if (!userInteracted) startAuto();
+            } else {
+              // fuori viewport → ferma per non sprecare risorse
+              clearInterval(autoTimer);
+            }
           });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.15, rootMargin: '0px' });
         expIO.observe(expSection);
-      } else {
-        // fallback: parte subito
-        setTimeout(startAuto, 2000);
       }
     }
   }

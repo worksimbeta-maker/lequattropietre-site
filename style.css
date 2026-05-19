@@ -2503,6 +2503,45 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   FIX FINALE — preloader opaco, foglie visibili
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* PRELOADER: completamente opaco con counter ben visibile (annulla see-through) */
+.preloader,
+.preloader.see-through {
+  background: var(--carbone) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.preloader .pl-curtain,
+.preloader.see-through .pl-curtain {
+  background: var(--carbone) !important;
+}
+
+/* FOGLIE D'ULIVO ben visibili (mobile + desktop) */
+.leaves { opacity: 1 !important; z-index: 2 !important; }
+.leaf, .leaf-1, .leaf-2, .leaf-3, .leaf-4, .leaf-5, .leaf-6 {
+  display: block !important;
+  width: 28px !important;
+  height: 11px !important;
+}
+@keyframes leafFall {
+  0%   { top: -40px; opacity: 0; transform: translateX(0) rotate(0deg); }
+  5%   { opacity: 0.75; }
+  50%  { transform: translateX(50px) rotate(180deg); }
+  95%  { opacity: 0.65; }
+  100% { top: 105vh; opacity: 0; transform: translateX(-50px) rotate(360deg); }
+}
+@media (max-width: 768px) {
+  .leaf, .leaf-3, .leaf-5, .leaf-6 {
+    opacity: 0.7 !important;
+    width: 24px !important;
+    height: 10px !important;
+  }
+  .leaves { opacity: 1 !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    MOBILE FIRST REWORK — iPhone optimization (vince su tutto)
    Fixa: overflow, font giganti, padding eccessivi, letter-spacing
    Aggiunge: wow mobile-only (scroll color, image fill, CTA dominante)
