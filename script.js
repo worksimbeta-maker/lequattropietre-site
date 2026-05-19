@@ -58,42 +58,52 @@
     }, { passive: true });
   }
 
-  /* ─── PRELOADER snappier: 700ms desktop, 500ms mobile ─── */
+  /* ─── PRELOADER: SKIP completo su mobile, breve su desktop ─── */
   const pl = $('#preloader');
-  const plCount = $('#plCount');
-  let plProgress = 0;
-  const plDuration = isMobile ? 500 : 700;
-  const plStart = performance.now();
-  const plLoop = (t) => {
-    plProgress = Math.min(100, Math.round(((t - plStart) / plDuration) * 100));
-    if (plCount) plCount.textContent = plProgress;
-    if (plProgress < 100) requestAnimationFrame(plLoop);
-  };
-  requestAnimationFrame(plLoop);
 
-  const startPreloaderExit = () => {
-    setTimeout(() => {
-      if (pl) {
-        pl.classList.add('done');
-        setTimeout(() => {
-          pl.classList.add('gone');
-          startHeroIntro();
-        }, 400);
-      }
-    }, Math.max(0, plDuration - (performance.now() - plStart) + 50));
-  };
-  if (document.readyState === 'complete') {
-    startPreloaderExit();
-  } else {
-    window.addEventListener('load', startPreloaderExit, { once: true });
-  }
-  // fallback hard: dopo 1.8s comunque sblocchiamo
-  setTimeout(() => {
-    if (pl && !pl.classList.contains('gone')) {
+  if (isMobile) {
+    // MOBILE: niente preloader. Hero visibile IMMEDIATAMENTE.
+    if (pl) {
       pl.classList.add('done');
-      setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 300);
+      pl.classList.add('gone');
+      pl.style.display = 'none';
     }
-  }, 1800);
+    // Avvia hero intro subito (le animazioni partono in 100ms)
+    setTimeout(startHeroIntro, 80);
+  } else {
+    // DESKTOP: preloader corto con counter (~700ms)
+    const plCount = $('#plCount');
+    let plProgress = 0;
+    const plDuration = 700;
+    const plStart = performance.now();
+    const plLoop = (t) => {
+      plProgress = Math.min(100, Math.round(((t - plStart) / plDuration) * 100));
+      if (plCount) plCount.textContent = plProgress;
+      if (plProgress < 100) requestAnimationFrame(plLoop);
+    };
+    requestAnimationFrame(plLoop);
+
+    const startPreloaderExit = () => {
+      setTimeout(() => {
+        if (pl) {
+          pl.classList.add('done');
+          setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 400);
+        }
+      }, Math.max(0, plDuration - (performance.now() - plStart) + 50));
+    };
+    if (document.readyState === 'complete') {
+      startPreloaderExit();
+    } else {
+      window.addEventListener('load', startPreloaderExit, { once: true });
+    }
+    // fallback hard 1.8s
+    setTimeout(() => {
+      if (pl && !pl.classList.contains('gone')) {
+        pl.classList.add('done');
+        setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 300);
+      }
+    }, 1800);
+  }
 
   /* ─── Anno footer ─── */
   const yearEl = $('#year');
