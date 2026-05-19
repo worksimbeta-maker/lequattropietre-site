@@ -950,24 +950,26 @@
       expTrack.addEventListener('mousedown', pauseAuto);
       expTrack.addEventListener('mouseup', resumeAuto);
 
-      // AUTO-ROTATE: parte garantito dopo 3 secondi dal page load.
-      // L'IntersectionObserver controlla SOLO pausa/resume per non sprecare CPU.
-      setTimeout(() => {
-        if (!userInteracted) startAuto();
-      }, 3000);
-
+      // AUTO-ROTATE: parte SUBITO appena disponibile la track.
+      // Niente più dipendenze da IntersectionObserver per l'avvio.
+      const kickoffAuto = () => {
+        if (!userInteracted && panels.length > 1) startAuto();
+      };
+      // 1) parte dopo 2s (sicuro)
+      setTimeout(kickoffAuto, 2000);
+      // 2) failsafe: parte dopo 4s se non è già partito
+      setTimeout(kickoffAuto, 4000);
+      // 3) IO solo per pausa quando la sezione è fuori viewport (no spreco CPU)
       if ('IntersectionObserver' in window) {
         const expIO = new IntersectionObserver((entries) => {
           entries.forEach(en => {
             if (en.isIntersecting) {
-              // visibile → riprendi (se non in pausa per touch)
               if (!userInteracted) startAuto();
             } else {
-              // fuori viewport → ferma per non sprecare risorse
               clearInterval(autoTimer);
             }
           });
-        }, { threshold: 0.15, rootMargin: '0px' });
+        }, { threshold: 0.05, rootMargin: '50% 0px 50% 0px' });
         expIO.observe(expSection);
       }
     }

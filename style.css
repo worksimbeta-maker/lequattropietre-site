@@ -2503,43 +2503,76 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   FIX FINALE — preloader opaco, foglie visibili
+   ULTIMO BLOCCO — vince su TUTTO (cascata finale)
+   Le ultime regole nel file vincono per ordine di dichiarazione.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* PRELOADER: completamente opaco con counter ben visibile (annulla see-through) */
+/* PRELOADER: SEMPRE opaco nero, counter 0-100% visibile */
 .preloader,
 .preloader.see-through {
-  background: var(--carbone) !important;
+  background: #1A140B !important;
+  background-image: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 .preloader .pl-curtain,
 .preloader.see-through .pl-curtain {
-  background: var(--carbone) !important;
+  background: #1A140B !important;
+}
+.preloader .pl-counter,
+.preloader.see-through .pl-counter {
+  display: flex !important;
+  font-size: 1.6rem !important;
+  color: #E0B95F !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+.preloader #plCount {
+  font-size: 1.8rem !important;
+  letter-spacing: -0.02em;
+}
+.preloader .pl-pct {
+  font-size: 1.1rem !important;
 }
 
-/* FOGLIE D'ULIVO ben visibili (mobile + desktop) */
-.leaves { opacity: 1 !important; z-index: 2 !important; }
-.leaf, .leaf-1, .leaf-2, .leaf-3, .leaf-4, .leaf-5, .leaf-6 {
+/* FOGLIE D'ULIVO: ben visibili e curate */
+.leaves {
+  opacity: 1 !important;
+  z-index: 3 !important;
+}
+.leaf {
   display: block !important;
-  width: 28px !important;
-  height: 11px !important;
+  width: 32px !important;
+  height: 12px !important;
+  filter: drop-shadow(0 2px 4px rgba(26,20,11,0.25));
 }
+.leaf-1, .leaf-2, .leaf-3, .leaf-4, .leaf-5, .leaf-6 {
+  display: block !important;
+}
+.leaf-4 { opacity: initial !important; }
+/* keyframe definitivo che vince sui precedenti */
 @keyframes leafFall {
-  0%   { top: -40px; opacity: 0; transform: translateX(0) rotate(0deg); }
-  5%   { opacity: 0.75; }
-  50%  { transform: translateX(50px) rotate(180deg); }
-  95%  { opacity: 0.65; }
-  100% { top: 105vh; opacity: 0; transform: translateX(-50px) rotate(360deg); }
+  0%   { top: -50px; opacity: 0; transform: translateX(0) rotate(0deg); }
+  8%   { opacity: 0.85; }
+  50%  { transform: translateX(60px) rotate(180deg); }
+  92%  { opacity: 0.75; }
+  100% { top: 110vh; opacity: 0; transform: translateX(-60px) rotate(360deg); }
 }
+
+/* Mobile: foglie sempre piene visibili */
 @media (max-width: 768px) {
-  .leaf, .leaf-3, .leaf-5, .leaf-6 {
-    opacity: 0.7 !important;
-    width: 24px !important;
-    height: 10px !important;
+  .leaves { opacity: 1 !important; z-index: 3 !important; }
+  .leaf, .leaf-1, .leaf-2, .leaf-3, .leaf-4, .leaf-5, .leaf-6 {
+    width: 28px !important;
+    height: 11px !important;
+    display: block !important;
   }
-  .leaves { opacity: 1 !important; }
 }
+
+/* Hero: visibile DOPO che il preloader sparisce */
+.hero-slide { transition: opacity 1.4s var(--ease); }
+.hero-slide.active { opacity: 1 !important; }
+.hero-slide:not(.active) { opacity: 0 !important; }
 
 /* ═══════════════════════════════════════════════════════════════════
    MOBILE FIRST REWORK — iPhone optimization (vince su tutto)
