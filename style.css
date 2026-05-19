@@ -2575,6 +2575,70 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 .hero-slide:not(.active) { opacity: 0 !important; }
 
 /* ═══════════════════════════════════════════════════════════════════
+   GSAP PINNED su MOBILE: neutralizza scroll-snap nativo
+   (scroll verticale → orizzontale come desktop)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .esperienze-h.gsap-pinned {
+    overflow: visible !important;
+    height: 100vh !important;
+    padding: 0 !important;
+  }
+  .esperienze-h.gsap-pinned .exp-h-track {
+    flex-direction: row !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    height: 100vh !important;
+    width: max-content !important;
+    transform: translateZ(0); /* GSAP imposterà translate3d */
+    -webkit-overflow-scrolling: auto !important;
+    touch-action: auto !important;
+    perspective: none !important;
+    padding: 0 !important;
+  }
+  .esperienze-h.gsap-pinned .exp-h-panel {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    scroll-snap-align: none !important;
+    flex-shrink: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    padding: 5rem 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .esperienze-h.gsap-pinned .exp-h-intro,
+  .esperienze-h.gsap-pinned .exp-h-outro {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  .esperienze-h.gsap-pinned .exp-h-card {
+    width: 100% !important;
+    max-width: 540px !important;
+    margin: 0 auto !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  .esperienze-h.gsap-pinned .exp-h-photo {
+    height: 34vh !important;
+    max-height: 320px !important;
+  }
+  /* niente dot pagination quando GSAP gira (sennò confuso) */
+  .esperienze-h.gsap-pinned .exp-dots { display: none !important; }
+  /* niente hint swipe orizzontale */
+  .esperienze-h.gsap-pinned::after { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    MOBILE FIRST REWORK — iPhone optimization (vince su tutto)
    Fixa: overflow, font giganti, padding eccessivi, letter-spacing
    Aggiunge: wow mobile-only (scroll color, image fill, CTA dominante)

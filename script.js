@@ -62,7 +62,8 @@
   if (pl && isMobile) pl.classList.add('see-through');
 
   const plCount = $('#plCount');
-  const plDuration = isMobile ? 500 : 700;
+  // PRELOADER più lento: l'utente vuole godersi l'effetto 0→100
+  const plDuration = isMobile ? 2000 : 2400;
   const plStart = performance.now();
   let plProgress = 0;
   const plLoop = (t) => {
@@ -85,13 +86,13 @@
   } else {
     window.addEventListener('load', startPreloaderExit, { once: true });
   }
-  // fallback hard 1.5s mobile / 1.8s desktop
+  // fallback hard: alza il limite (il preloader ora dura di più)
   setTimeout(() => {
     if (pl && !pl.classList.contains('gone')) {
       pl.classList.add('done');
       setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 300);
     }
-  }, isMobile ? 1500 : 1800);
+  }, isMobile ? 3500 : 4000);
 
   /* ─── Anno footer ─── */
   const yearEl = $('#year');
@@ -350,12 +351,15 @@
     initNavTracking();
   }
 
-  /* ─── HORIZONTAL PINNED SCROLL ─── */
+  /* ─── HORIZONTAL PINNED SCROLL — ATTIVO ANCHE SU MOBILE ─── */
   function initHorizontalScroll() {
-    if (window.matchMedia('(max-width: 900px)').matches) return;
+    // Su mobile l'attiviamo solo se prefers-reduced-motion non è attivo
+    if (prefersReducedMotion) return;
     const wrap = $('.esperienze-h');
     const track = $('.exp-h-track', wrap);
     if (!wrap || !track) return;
+    // Marca la sezione per disattivare il CSS swipe nativo (conflitto con GSAP)
+    wrap.classList.add('gsap-pinned');
 
     const panels = $$('.exp-h-panel', track);
     const total = panels.length;
@@ -845,10 +849,13 @@
   });
 
   /* ════════════════════════════════════════════════════
-     MOBILE WOW: 3D carousel + dot pagination + haptic
-     (pattern: iOS Apple Music + MotionSites Liquid Glass)
+     MOBILE WOW: dot pagination + haptic
+     (auto-rotate skippato perché GSAP pinned gestisce lo scroll)
      ════════════════════════════════════════════════════ */
-  if (isMobile) {
+  // L'auto-rotate non serve più: il GSAP pinned scroll converte
+  // lo scroll verticale in orizzontale, è la stessa esperienza desktop.
+  const SKIP_AUTO_ROTATE = !prefersReducedMotion; // skip se GSAP gira
+  if (isMobile && !SKIP_AUTO_ROTATE) {
     const expTrack = $('.exp-h-track');
     if (expTrack) {
       const panels = $$('.exp-h-panel', expTrack);
