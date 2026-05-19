@@ -907,7 +907,80 @@
       setTimeout(updateCarousel, 150);
       // refresh dopo orientation change
       window.addEventListener('resize', () => setTimeout(updateCarousel, 300));
+
+      // ───── AUTO-ROTATE carousel ogni 4s (pausa al touch) ─────
+      let autoIdx = 0;
+      let autoTimer = null;
+      let userInteracted = false;
+      const AUTO_DELAY = 4200;
+      const RESUME_DELAY = 8000;
+
+      const goToPanel = (i) => {
+        if (!panels[i]) return;
+        panels[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      };
+      const startAuto = () => {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+          if (userInteracted) return;
+          autoIdx = (autoIdx + 1) % panels.length;
+          goToPanel(autoIdx);
+        }, AUTO_DELAY);
+      };
+      const pauseAuto = () => { userInteracted = true; clearInterval(autoTimer); };
+      const resumeAuto = () => {
+        clearTimeout(window.__expResumeTO);
+        window.__expResumeTO = setTimeout(() => {
+          userInteracted = false;
+          // sincronizza autoIdx col panel attualmente centrato
+          const center = expTrack.scrollLeft + expTrack.clientWidth / 2;
+          let closest = 0, minDist = Infinity;
+          panels.forEach((p, i) => {
+            const dist = Math.abs(p.offsetLeft + p.offsetWidth / 2 - center);
+            if (dist < minDist) { minDist = dist; closest = i; }
+          });
+          autoIdx = closest;
+          startAuto();
+        }, RESUME_DELAY);
+      };
+
+      // Touch/scroll handlers per pausa
+      expTrack.addEventListener('touchstart', pauseAuto, { passive: true });
+      expTrack.addEventListener('touchend', resumeAuto, { passive: true });
+      expTrack.addEventListener('mousedown', pauseAuto);
+      expTrack.addEventListener('mouseup', resumeAuto);
+
+      // Avvia auto-rotate dopo intersezione viewport (non gira sprecato fuori)
+      if ('IntersectionObserver' in window) {
+        const expIO = new IntersectionObserver((entries) => {
+          entries.forEach(en => {
+            if (en.isIntersecting && !userInteracted) startAuto();
+            else clearInterval(autoTimer);
+          });
+        }, { threshold: 0.3 });
+        expIO.observe(expSection);
+      } else {
+        // fallback: parte subito
+        setTimeout(startAuto, 2000);
+      }
     }
+  }
+
+  /* ─── Labels submit più corte su mobile (testo che entra) ─── */
+  if (isMobile) {
+    const subLabel = $('#submit-label');
+    const updateMobileLabels = () => {
+      const tipo = $('input[name="tipo"]:checked')?.value || 'ristorante';
+      const shortLabels = {
+        ristorante: 'Prenota tavolo',
+        camere:     'Verifica camere',
+        evento:     'Richiedi info evento',
+        info:       'Invia richiesta',
+      };
+      if (subLabel) subLabel.textContent = shortLabels[tipo] || 'Invia';
+    };
+    updateMobileLabels();
+    $$('input[name="tipo"]').forEach(r => r.addEventListener('change', updateMobileLabels));
   }
 
   /* ════════════════════════════════════════════════════

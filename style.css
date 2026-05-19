@@ -2392,6 +2392,117 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   FIX FINALE — preloader pieno + foto subito + form clean + footer ok
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* PRELOADER: counter visibile (RIMOSSA see-through). Hero appare dopo il 100%. */
+.preloader.see-through {
+  /* annulla l'ultimo override see-through: il preloader è opaco di nuovo */
+  background: var(--carbone) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.preloader.see-through .pl-curtain { background: var(--carbone) !important; }
+/* sizing rimane raffinato su mobile */
+.preloader.see-through .pl-stones { width: 64px !important; height: 64px !important; }
+.preloader.see-through .pl-word { font-size: 1.3rem !important; letter-spacing: 0.04em !important; }
+.preloader.see-through .pl-sub { font-size: 0.55rem !important; letter-spacing: 0.28em !important; }
+.preloader.see-through .pl-counter { font-size: 1.2rem !important; color: var(--oro-soft) !important; }
+
+/* FOGLIE su mobile: TUTTE visibili (l'utente le vuole) */
+@media (max-width: 768px) {
+  .leaf, .leaf-3, .leaf-5, .leaf-6 { display: block !important; opacity: 0.32 !important; }
+}
+
+/* FOOTER GIANT TEXT: SU MOBILE deve andare a capo, non più nowrap */
+@media (max-width: 900px) {
+  .footer-grand { padding: 3rem 0 1.5rem !important; }
+  .footer-grand-text {
+    white-space: normal !important;
+    font-size: clamp(2.4rem, 13vw, 4rem) !important;
+    line-height: 0.95 !important;
+    word-break: keep-all;
+    hyphens: none;
+  }
+  /* l'em italico "Pietre" diventa block per andare a capo */
+  .footer-grand-text em { display: inline-block; }
+}
+
+/* FORM mobile: fix input[date] iOS, checkbox label, button text */
+@media (max-width: 900px) {
+  /* input date iOS: appearance none + min-height per non venire schiacciato */
+  .field input[type="date"] {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    min-height: 48px !important;
+    background-color: rgba(245, 239, 224, 0.05) !important;
+    color: var(--panna) !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+  }
+  .field input[type="date"]::-webkit-date-and-time-value {
+    text-align: left !important;
+    color: var(--panna);
+  }
+  /* placeholder italic per coerenza */
+  .field input[type="date"]:invalid,
+  .field input[type="date"]:empty,
+  .field input[type="date"]:not(:focus):not(:placeholder-shown) { color: var(--panna); }
+
+  /* checkbox label "Ho letto e accetto" — deve wrappare correttamente */
+  .field.check { width: 100% !important; }
+  .field.check label {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.55rem !important;
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    word-break: keep-all;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+  }
+  .field.check label input[type="checkbox"] {
+    flex-shrink: 0 !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin-top: 1px !important;
+    accent-color: var(--oro-bright);
+  }
+  .field.check label > * { white-space: normal !important; }
+  .field.check a { text-decoration: underline !important; color: var(--oro-bright) !important; }
+
+  /* button submit: testo che entra sempre */
+  .prenota-form .btn-primary {
+    white-space: normal !important;
+    flex-wrap: wrap !important;
+    text-align: center !important;
+    padding: 1.05rem 0.8rem !important;
+    line-height: 1.3 !important;
+    word-break: keep-all;
+    font-size: 12px !important;
+    letter-spacing: 0.14em !important;
+    gap: 0.4rem !important;
+  }
+  .prenota-form .btn-primary .btn-label {
+    display: inline-block !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+  }
+  .prenota-form .btn-primary .btn-arrow {
+    display: inline-flex !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* iPhone SE / very narrow */
+@media (max-width: 380px) {
+  .field.check label { font-size: 12px !important; }
+  .prenota-form .btn-primary { font-size: 11px !important; padding: 1rem 0.6rem !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    MOBILE FIRST REWORK — iPhone optimization (vince su tutto)
    Fixa: overflow, font giganti, padding eccessivi, letter-spacing
    Aggiunge: wow mobile-only (scroll color, image fill, CTA dominante)
