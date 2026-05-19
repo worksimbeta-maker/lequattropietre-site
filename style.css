@@ -2250,8 +2250,145 @@ body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
 @media (max-width: 380px) {
   .prenota-form .choice span { padding: 0.65rem 0.3rem !important; font-size: 13px !important; }
   .pc-ico { width: 36px !important; height: 36px !important; }
-  .prenota { padding: 3.5rem 0.9rem !important; }
-  .prenota-form { padding: 1.2rem 0.8rem !important; }
+  .prenota { padding: 3.5rem 0.7rem !important; }
+  .prenota-form { padding: 1.2rem 0.7rem !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FIX FINALI — SWIPE iOS + PRELOADER TRASPARENTE + FORM NON TAGLIATO
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* PRELOADER trasparente (vede hero sotto) — mobile only */
+.preloader.see-through {
+  background: linear-gradient(180deg,
+    rgba(26, 20, 11, 0.55) 0%,
+    rgba(26, 20, 11, 0.85) 100%) !important;
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+}
+.preloader.see-through .pl-curtain {
+  background: transparent !important;
+}
+.preloader.see-through .pl-stones {
+  width: 56px !important;
+  height: 56px !important;
+}
+.preloader.see-through .pl-word {
+  font-size: 1.1rem !important;
+  letter-spacing: 0.06em !important;
+}
+.preloader.see-through .pl-sub {
+  font-size: 0.5rem !important;
+}
+.preloader.see-through .pl-counter {
+  font-size: 0.95rem !important;
+  color: var(--oro-bright) !important;
+}
+
+/* HERO mobile: foto visibile da subito, opacity full */
+@media (max-width: 900px) {
+  .hero-slide.active { opacity: 1 !important; }
+  .hero-slide:not(.active) { opacity: 0 !important; }
+  /* l'animazione hero si attiva quando il preloader sparisce */
+  .hero-slides { opacity: 1 !important; visibility: visible !important; }
+}
+
+/* SWIPE FIX iOS: touch-action esplicito + scroll forzato */
+@media (max-width: 900px) {
+  .esperienze-h {
+    touch-action: pan-y;
+  }
+  .exp-h-track {
+    /* CRUCIALE per iOS: dichiarare che questo elemento può fare pan-x */
+    touch-action: pan-x pan-y !important;
+    overscroll-behavior-x: contain !important;
+    /* assicura che lo scroll non sia bloccato da nessun parent */
+    isolation: isolate;
+    /* GSAP transform OFF assolutamente */
+    transform: none !important;
+  }
+  .exp-h-panel {
+    touch-action: manipulation;
+  }
+  /* hero deve permettere pan-y allo scroll */
+  .hero { touch-action: pan-y; }
+}
+
+/* FORM TAGLIATO FIX DEFINITIVO */
+@media (max-width: 900px) {
+  /* container prenota: no overflow orizzontale */
+  .prenota {
+    overflow: hidden !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .prenota-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+  .prenota-side {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .prenota-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  .form-grid {
+    width: 100% !important;
+    grid-template-columns: 1fr !important;
+    box-sizing: border-box !important;
+  }
+  .field {
+    min-width: 0 !important; /* fix per i grid item */
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .field input, .field textarea, .field select {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+  }
+  /* choice grid: 2 colonne strette ma stabili */
+  .prenota-form .choice-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .prenota-form .choice {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .prenota-form .choice span {
+    width: 100% !important;
+    padding: 0.85rem 0.3rem !important;
+    font-size: 13px !important;
+    letter-spacing: 0.02em !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Hero: fallback CSS se GSAP non gira (es. reduced-motion) */
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .hero-eyebrow,
+  .hero-sub,
+  .hero-ctas,
+  .hero-trust {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

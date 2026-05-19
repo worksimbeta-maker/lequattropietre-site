@@ -37,12 +37,9 @@
       gsap.ticker.add((time) => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
     }
-  } else {
-    // su mobile: assicuriamoci che ScrollTrigger funzioni senza Lenis
-    if (window.ScrollTrigger) {
-      ScrollTrigger.normalizeScroll(true);
-    }
   }
+  // NB: normalizeScroll() era qui ma INTERCETTAVA il swipe orizzontale
+  // delle Esperienze su iOS. Rimosso. Lo scroll iOS nativo è già fluido.
 
   /* ─── GRADIENT MESH che segue il mouse ─── */
   if (hasHover && !prefersReducedMotion) {
@@ -58,52 +55,43 @@
     }, { passive: true });
   }
 
-  /* ─── PRELOADER: SKIP completo su mobile, breve su desktop ─── */
+  /* ─── PRELOADER: counter 0→100% SOPRA l'hero già visibile ─── */
+  // Il preloader è semi-trasparente, l'immagine hero si vede subito sotto.
   const pl = $('#preloader');
+  // Da subito attiviamo classe "see-through" su mobile (sfondo trasparente)
+  if (pl && isMobile) pl.classList.add('see-through');
 
-  if (isMobile) {
-    // MOBILE: niente preloader. Hero visibile IMMEDIATAMENTE.
-    if (pl) {
-      pl.classList.add('done');
-      pl.classList.add('gone');
-      pl.style.display = 'none';
-    }
-    // Avvia hero intro subito (le animazioni partono in 100ms)
-    setTimeout(startHeroIntro, 80);
-  } else {
-    // DESKTOP: preloader corto con counter (~700ms)
-    const plCount = $('#plCount');
-    let plProgress = 0;
-    const plDuration = 700;
-    const plStart = performance.now();
-    const plLoop = (t) => {
-      plProgress = Math.min(100, Math.round(((t - plStart) / plDuration) * 100));
-      if (plCount) plCount.textContent = plProgress;
-      if (plProgress < 100) requestAnimationFrame(plLoop);
-    };
-    requestAnimationFrame(plLoop);
+  const plCount = $('#plCount');
+  const plDuration = isMobile ? 500 : 700;
+  const plStart = performance.now();
+  let plProgress = 0;
+  const plLoop = (t) => {
+    plProgress = Math.min(100, Math.round(((t - plStart) / plDuration) * 100));
+    if (plCount) plCount.textContent = plProgress;
+    if (plProgress < 100) requestAnimationFrame(plLoop);
+  };
+  requestAnimationFrame(plLoop);
 
-    const startPreloaderExit = () => {
-      setTimeout(() => {
-        if (pl) {
-          pl.classList.add('done');
-          setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 400);
-        }
-      }, Math.max(0, plDuration - (performance.now() - plStart) + 50));
-    };
-    if (document.readyState === 'complete') {
-      startPreloaderExit();
-    } else {
-      window.addEventListener('load', startPreloaderExit, { once: true });
-    }
-    // fallback hard 1.8s
+  const startPreloaderExit = () => {
     setTimeout(() => {
-      if (pl && !pl.classList.contains('gone')) {
+      if (pl) {
         pl.classList.add('done');
-        setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 300);
+        setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 400);
       }
-    }, 1800);
+    }, Math.max(0, plDuration - (performance.now() - plStart) + 50));
+  };
+  if (document.readyState === 'complete') {
+    startPreloaderExit();
+  } else {
+    window.addEventListener('load', startPreloaderExit, { once: true });
   }
+  // fallback hard 1.5s mobile / 1.8s desktop
+  setTimeout(() => {
+    if (pl && !pl.classList.contains('gone')) {
+      pl.classList.add('done');
+      setTimeout(() => { pl.classList.add('gone'); startHeroIntro(); }, 300);
+    }
+  }, isMobile ? 1500 : 1800);
 
   /* ─── Anno footer ─── */
   const yearEl = $('#year');
